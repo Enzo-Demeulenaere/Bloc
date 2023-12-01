@@ -5,7 +5,7 @@ Class {
 		'element',
 		'form'
 	],
-	#category : #'Bloc-Thumbnail'
+	#category : #'Bloc-Thumbnail-Basic'
 }
 
 { #category : #'instance creation' }
