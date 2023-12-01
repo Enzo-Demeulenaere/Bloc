@@ -5,7 +5,7 @@ Class {
 		'flap',
 		'label'
 	],
-	#category : #'Bloc-Thumbnail'
+	#category : #'Bloc-Flaps'
 }
 
 { #category : #accessing }

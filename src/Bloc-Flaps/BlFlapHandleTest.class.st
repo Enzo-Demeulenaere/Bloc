@@ -1,7 +1,7 @@
 Class {
 	#name : #BlFlapHandleTest,
 	#superclass : #TestCase,
-	#category : #'Bloc-Thumbnail-Tests'
+	#category : #'Bloc-Flaps-Tests'
 }
 
 { #category : #tests }

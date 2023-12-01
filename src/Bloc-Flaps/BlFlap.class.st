@@ -7,7 +7,7 @@ Class {
 		'edge',
 		'open'
 	],
-	#category : #'Bloc-Thumbnail-Basic'
+	#category : #'Bloc-Flaps'
 }
 
 { #category : #adding }
