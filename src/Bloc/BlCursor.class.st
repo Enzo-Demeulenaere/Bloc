@@ -28,7 +28,12 @@ BlCursor class >> hand [
 	^ BlHandCursor new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
+BlCursor class >> notAllowed [
+	^ BlNotAllowedCursor new
+]
+
+{ #category : 'instance creation' }
 BlCursor class >> overEditableText [ 
 	^ BlTextCursor new
 ]

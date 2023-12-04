@@ -155,14 +155,16 @@ BlSharedEventDistributorExamples >> testMouseLeaveEventOneOutOfTwoElements [
 		when: BlMouseLeaveEvent
 		do: [ aMouseLeaveTwo := aMouseLeaveTwo + 1 ].
 
-	BlOSpace
+	BlSpace
 		simulateEvents: {
-				(BlMouseMoveEvent new
-					 position: (BlOSpace locationInside: anElementOne);
-					 screenPosition: 0 @ 0).
-				(BlMouseMoveEvent new
-					 position: (BlOSpace locationOutside: aContainer);
-					 screenPosition: 0 @ 0) }
+			BlMouseMoveEvent new
+				position: (BlSpace locationInside: anElementOne);
+				screenPosition: 0@0;
+				yourself.
+			BlMouseMoveEvent new
+				position: (BlSpace locationOutside: aContainer);
+				screenPosition: 0@0;
+				yourself }
 		on: aContainer.
 
 	self assert: aMouseLeaveOne equals: 1.

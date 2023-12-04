@@ -37,21 +37,33 @@ BlSpace2Test >> iconStencil [
 ]
 
 { #category : #'test seed' }
-BlSpace2Test >> spaceWithSlownDownTime [
+BlSpace2Test >> infiniteAnimation [
 
 	<sampleInstance>
+	| anAnimation |
+	anAnimation := BlSequentialAnimation new.
+	anAnimation add: (BlTransformAnimation scale: 2) absolute.
+	anAnimation add: (BlTransformAnimation scale: 0.5) absolute.
+	anAnimation beInfinite.
+	^ anAnimation
+]
+
+{ #category : #'test seed' }
+BlSpace2Test >> spaceWithSlownDownTime [
+	<sampleInstance>
+
 	| aTime aSpace |
 	aTime := BlFastForwardedTime new.
 	aTime speed: 0.2.
-	aSpace := BlOSpace new.
+	aSpace := BlSpace new.
 	aSpace time: aTime.
 	^ aSpace
 ]
 
 { #category : #'test seed' }
 BlSpace2Test >> spaceWithSlownDownTimeAndAnimatedElement [
-
 	<sampleInstance>
+
 	| aSpace |
 	aSpace := self spaceWithSlownDownTime.
 	aSpace root addChild: self animatedElement.
@@ -85,7 +97,7 @@ BlSpace2Test >> testEmptySpace [
 
 	<sampleInstance>
 	| aSpace |
-	aSpace := BlOSpace new.
+	aSpace := BlSpace new.
 	self assert: aSpace session equals: Smalltalk session.
 	self deny: aSpace root hasChildren.
 	self deny: aSpace hasDirtyElements.
