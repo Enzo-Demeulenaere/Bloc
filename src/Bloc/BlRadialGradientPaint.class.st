@@ -41,7 +41,7 @@ BlRadialGradientPaint >> innerRadius: aNumber [
 	innerRadius := aNumber
 ]
 
-{ #category : 'geometry' }
+{ #category : #geometry }
 BlRadialGradientPaint >> matchExtent: anExtent [
 ]
 
@@ -69,7 +69,7 @@ BlRadialGradientPaint >> outerRadius: aNumber [
 	outerRadius := aNumber
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 BlRadialGradientPaint >> radius: aNumber [
 	"Set the outerRadius. The innerRadius will be set to zero."
 
