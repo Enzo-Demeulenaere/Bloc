@@ -5,7 +5,8 @@ Class {
 		'handle',
 		'openPercentage',
 		'edge',
-		'open'
+		'open',
+		'container'
 	],
 	#category : #'Bloc-Flaps'
 }
@@ -22,6 +23,11 @@ BlFlap >> close [
 	open := false
 ]
 
+{ #category : #accessing }
+BlFlap >> container [ 
+	^ container
+]
+
 { #category : #'as yet unclassified' }
 BlFlap >> createHandle [ 
 	
@@ -32,7 +38,8 @@ BlFlap >> createHandle [
 ]
 
 { #category : #initialization }
-BlFlap >> defaultColor [ 
+BlFlap >> defaultColor [
+
 	^ Color lightRed
 ]
 
@@ -68,7 +75,12 @@ BlFlap >> initialize [
 	super initialize.
 	edge := self defaultEdge.
 	open := false.
+	container := BlThumbnailContainer new.
 	openPercentage := self defaultOpenPercentage.
+	self constraintsDo: [ :c |
+		c vertical matchParent.
+		c horizontal fitContent ].
+	self layout: BlLinearLayout horizontal.
 	self createHandle
 ]
 
