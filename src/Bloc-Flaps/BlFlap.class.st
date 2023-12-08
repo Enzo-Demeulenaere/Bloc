@@ -17,6 +17,15 @@ BlFlap >> addToSpace: aBlSpace [
 	aBlSpace root addChild: self
 ]
 
+{ #category : #'api - look' }
+BlFlap >> background: aColor [
+
+	self container background:
+		((BlBackground paint: aColor) opacity: 0.5).
+	self container border: (self container border copyWithPaint: aColor).
+	self handle background: aColor
+]
+
 { #category : #public }
 BlFlap >> click [ 
 	self isOpen ifTrue: [ self close ] ifFalse: [ self open ]
