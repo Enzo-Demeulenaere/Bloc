@@ -2,7 +2,8 @@ Class {
 	#name : #BlThumbnailContainer,
 	#superclass : #BlElement,
 	#instVars : [
-		'elements'
+		'elements',
+		'flap'
 	],
 	#category : #'Bloc-Flaps'
 }
@@ -18,6 +19,18 @@ BlThumbnailContainer >> elements [
 	^ elements
 ]
 
+{ #category : #accessing }
+BlThumbnailContainer >> flap [
+
+	^ flap
+]
+
+{ #category : #accessing }
+BlThumbnailContainer >> flap: aBlFlap [
+
+	flap := aBlFlap 
+]
+
 { #category : #initialization }
 BlThumbnailContainer >> initialize [
 
@@ -26,8 +39,7 @@ BlThumbnailContainer >> initialize [
 	"self geometry: (BlRoundedRectangleGeometry cornerRadius: 10)."
 	self layout: BlFlowLayout vertical.
 	self constraintsDo: [ :c |
-		c vertical matchParent.
-		c horizontal fitContent ].
+		c vertical matchParent ].
 	self initializeBackground.
 	self initializeBorder
 ]

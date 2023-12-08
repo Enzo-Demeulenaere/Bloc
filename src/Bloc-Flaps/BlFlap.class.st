@@ -17,24 +17,21 @@ BlFlap >> addToSpace: aBlSpace [
 	aBlSpace root addChild: self
 ]
 
+{ #category : #public }
+BlFlap >> click [ 
+	self isOpen ifTrue: [ self close ] ifFalse: [ self open ]
+]
+
 { #category : #'initialize-release' }
-BlFlap >> close [ 
-	
-	open := false
+BlFlap >> close [
+
+	open := false.
+	self container visibility: BlVisibility gone
 ]
 
 { #category : #accessing }
 BlFlap >> container [ 
 	^ container
-]
-
-{ #category : #'as yet unclassified' }
-BlFlap >> createHandle [ 
-	
-	|flapHandle|
-	flapHandle := BlFlapHandle new.
-	self handle: flapHandle .
-	flapHandle flap: self.
 ]
 
 { #category : #initialization }
@@ -75,13 +72,28 @@ BlFlap >> initialize [
 	super initialize.
 	edge := self defaultEdge.
 	open := false.
-	container := BlThumbnailContainer new.
 	openPercentage := self defaultOpenPercentage.
 	self constraintsDo: [ :c |
 		c vertical matchParent.
 		c horizontal fitContent ].
 	self layout: BlLinearLayout horizontal.
-	self createHandle
+	self initializeContainer.
+	self initializeHandle.
+	
+]
+
+{ #category : #initialization }
+BlFlap >> initializeContainer [
+
+	container := BlThumbnailContainer new flap: self.
+	self addChild: container
+]
+
+{ #category : #'as yet unclassified' }
+BlFlap >> initializeHandle [
+
+	handle := BlFlapHandle new flap: self.
+	self addChild: self handle.
 ]
 
 { #category : #testing }
@@ -91,8 +103,10 @@ BlFlap >> isOpen [
 ]
 
 { #category : #accessing }
-BlFlap >> open [ 
-	open := true
+BlFlap >> open [
+
+	open := true.
+	self container visibility: BlVisibility visible.
 ]
 
 { #category : #accessing }
