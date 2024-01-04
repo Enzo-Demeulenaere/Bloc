@@ -70,7 +70,18 @@ BlFlapHandle >> initialize [
 				  yourself)).
 	self label: self defaultLabel.
 	self addChild: self label.
-	self addEventHandlerOn: BlClickEvent do: [ self flap click ]
+	self initializeEvents 
+]
+
+{ #category : #initialization }
+BlFlapHandle >> initializeEvents [
+
+	self addEventHandlerOn: BlClickEvent do: [ :e |
+		e button
+			ifPrimary: [ self primaryClick ]
+			secondary: [ self secondaryClick ]
+			middle: [ ^ self ]
+			other: [ ^ self ] ]
 ]
 
 { #category : #accessing }
@@ -84,8 +95,23 @@ BlFlapHandle >> label: aTextElement [
 	label := aTextElement 
 ]
 
+{ #category : #events }
+BlFlapHandle >> primaryClick [
+	
+	self flap click
+
+	
+]
+
 { #category : #transformations }
 BlFlapHandle >> rotateBy: anAngle [ 
 		
 	self transform rotateBy: anAngle; apply
+]
+
+{ #category : #events }
+BlFlapHandle >> secondaryClick [
+
+	self flap openPercentage: (0.1 to: 0.9 by: 0.05) atRandom.
+	self flap updateSize
 ]

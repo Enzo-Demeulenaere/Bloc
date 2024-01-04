@@ -15,7 +15,8 @@ Class {
 BlFlap >> addToSpace: aBlSpace [
 
 	aBlSpace root addChild: self.
-	self container width: self space width * self openPercentage
+	self updateSize.
+	
 ]
 
 { #category : #'api - look' }
@@ -129,4 +130,10 @@ BlFlap >> openPercentage: aNumber [
 	
 	aNumber > 90 ifTrue: [ ^ self ].
 	openPercentage := aNumber 
+]
+
+{ #category : #'as yet unclassified' }
+BlFlap >> updateSize [ 
+
+	self container width: self space width * self openPercentage
 ]
