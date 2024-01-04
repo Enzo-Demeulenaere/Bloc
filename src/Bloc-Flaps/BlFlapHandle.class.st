@@ -38,6 +38,17 @@ BlFlapHandle >> defaultLabel [
 	^ lab
 ]
 
+{ #category : #'as yet unclassified' }
+BlFlapHandle >> drag [
+
+	| x |
+	"self flap background: Color random."
+	x := self space testMouseProcessor lastMouseMoveEvent position x.
+	self flap container width: (x < 50
+			 ifTrue: [ 50 ]
+			 ifFalse: [ x min: self space width - 100 ])
+]
+
 { #category : #accessing }
 BlFlapHandle >> flap [
 	^ flap
@@ -81,7 +92,9 @@ BlFlapHandle >> initializeEvents [
 			ifPrimary: [ self primaryClick ]
 			secondary: [ self secondaryClick ]
 			middle: [ ^ self ]
-			other: [ ^ self ] ]
+			other: [ ^ self ] ].
+	self addEventHandlerOn: BlBaseDragEvent do: [
+		self drag ]
 ]
 
 { #category : #accessing }
