@@ -23,7 +23,19 @@ BlFlapHandle >> defaultBackground [
 { #category : #accessing }
 BlFlapHandle >> defaultLabel [
 
-	^ BlTextElement text: 'New Flap' asRopedText 
+	| lab textSize |
+	lab := BlTextElement text: ('New Flap' asRopedText
+			        fontSize: 15;
+			        yourself).
+	lab forceLayout.
+	textSize := lab size.
+
+	lab transformDo: [ :t |
+		t translateBy: 0 @ textSize y negated.
+		t topLeftOrigin.
+		t rotateBy: 90 ].
+	lab size: lab transformedBounds extent.
+	^ lab
 ]
 
 { #category : #accessing }
@@ -49,6 +61,13 @@ BlFlapHandle >> initialize [
 		c linear vertical alignCenter ].
 	self padding: (BlInsets all: 10).
 	self background: self defaultBackground.
+	self geometry:
+		(BlRoundedRectangleGeometry cornerRadii: (BlCornerRadii new
+				  topLeft: 0;
+				  topRight: 15;
+				  bottomLeft: 0;
+				  bottomRight: 15;
+				  yourself)).
 	self label: self defaultLabel.
 	self addChild: self label.
 	self addEventHandlerOn: BlClickEvent do: [ self flap click ]
