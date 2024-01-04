@@ -63,6 +63,6 @@ BlFlapTest >> testFlapCorrectlyInitialized [
 	self assert: flap edge equals: #right.
 	self assert: flap handle class equals: BlFlapHandle.
 	self assert: flap container class equals: BlThumbnailContainer.
-	self deny: flap isOpen.
-	self assert: flap openPercentage equals: 20
+	self assert: flap isOpen.
+	self assert: flap openPercentage equals: 0.1
 ]
