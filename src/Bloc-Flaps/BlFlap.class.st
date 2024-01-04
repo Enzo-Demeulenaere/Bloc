@@ -12,9 +12,10 @@ Class {
 }
 
 { #category : #adding }
-BlFlap >> addToSpace: aBlSpace [ 
-	
-	aBlSpace root addChild: self
+BlFlap >> addToSpace: aBlSpace [
+
+	aBlSpace root addChild: self.
+	self container width: self space width * self openPercentage
 ]
 
 { #category : #'api - look' }
@@ -55,9 +56,9 @@ BlFlap >> defaultEdge [
 ]
 
 { #category : #'as yet unclassified' }
-BlFlap >> defaultOpenPercentage [ 
-		
-	^ 20
+BlFlap >> defaultOpenPercentage [
+
+	^ 0.1
 ]
 
 { #category : #accessing }
@@ -80,22 +81,22 @@ BlFlap >> initialize [
 
 	super initialize.
 	edge := self defaultEdge.
-	open := false.
+	open := true.
 	openPercentage := self defaultOpenPercentage.
 	self constraintsDo: [ :c |
 		c vertical matchParent.
 		c horizontal fitContent ].
 	self layout: BlLinearLayout horizontal.
 	self initializeContainer.
-	self initializeHandle.
-	
+	self initializeHandle
 ]
 
 { #category : #initialization }
 BlFlap >> initializeContainer [
 
 	container := BlThumbnailContainer new flap: self.
-	self addChild: container
+	self addChild: container.
+	 
 ]
 
 { #category : #'as yet unclassified' }
