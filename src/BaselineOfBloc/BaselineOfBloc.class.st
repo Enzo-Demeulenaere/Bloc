@@ -140,6 +140,13 @@ BaselineOfBloc >> baseline: spec [
 					spec requires: #(#'Bloc-SVG') ];
 				package: #'Bloc-Alexandrie-SVG' with: [
 					spec requires: #(#'Bloc-Alexandrie' #'Bloc-SVG') ].
+			
+			"Flaps"
+			spec 
+				package: #'Bloc-Flaps' with: [ 
+					spec requires: #(#'Bloc') ];
+				package: #'Bloc-Flaps-Tests' with: [ 
+					spec requires: #(#'Bloc-Flaps') ].
 
 			]
 ]
