@@ -41,12 +41,21 @@ BlFlapHandle >> defaultLabel [
 { #category : #'as yet unclassified' }
 BlFlapHandle >> drag [
 
-	| x |
-	"self flap background: Color random."
-	x := self space testMouseProcessor lastMouseMoveEvent position x.
-	self flap container width: (x < 50
+	| mousePos spaceExtent newY |
+	self flap isOpen ifFalse: [ self flap open ].
+	mousePos := self space testMouseProcessor lastMouseMoveEvent position.
+	spaceExtent := self space extent.
+	self flap container width: (mousePos x < 50
 			 ifTrue: [ 50 ]
-			 ifFalse: [ x min: self space width - 100 ])
+			 ifFalse: [ mousePos x min: spaceExtent x - 100 ]).
+	newY := mousePos y.
+	newY := newY < 0
+		        ifTrue: [ 0 ]
+		        ifFalse: [ newY min: spaceExtent y - self height ].
+	self constraintsDo: [ :c |
+		c linear vertical alignment:
+			(BlVerticalCoordinateTopAlignment new coordinate:
+				 newY / spaceExtent y) ]
 ]
 
 { #category : #accessing }
@@ -81,7 +90,7 @@ BlFlapHandle >> initialize [
 				  yourself)).
 	self label: self defaultLabel.
 	self addChild: self label.
-	self initializeEvents 
+	self initializeEvents
 ]
 
 { #category : #initialization }
