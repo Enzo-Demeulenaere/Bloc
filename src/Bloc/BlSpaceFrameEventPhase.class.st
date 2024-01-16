@@ -42,5 +42,5 @@ BlSpaceFrameEventPhase >> runOn: aSpace [
 								theSpace eventDispatcher dispatchEvent: anEvent ] ]  ] ].
 				
 				theSpace hostSpaceDo: [ :aHostSpace | aHostSpace generateEvents ] ].
-			theSpace testMouseProcessor generateEvents ]
+			theSpace mouseProcessor generateEvents ]
 ]

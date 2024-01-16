@@ -9,7 +9,7 @@ Class {
 	#superclass : #Object,
 	#traits : 'TBlDebug',
 	#classTraits : 'TBlDebug classTrait',
-	#category : 'Bloc-Space - Cursor'
+	#category : #'Bloc-Space - Cursor'
 }
 
 { #category : #'instance creation' }
@@ -28,12 +28,12 @@ BlCursor class >> hand [
 	^ BlHandCursor new
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 BlCursor class >> notAllowed [
 	^ BlNotAllowedCursor new
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 BlCursor class >> overEditableText [ 
 	^ BlTextCursor new
 ]

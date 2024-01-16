@@ -1,6 +1,8 @@
 Class {
 	#name : #BlDevScripterStep,
 	#superclass : #Object,
+	#traits : 'TBlDebug',
+	#classTraits : 'TBlDebug classTrait',
 	#instVars : [
 		'state',
 		'label',
@@ -175,6 +177,6 @@ BlDevScripterStep >> target [
 
 { #category : #testing }
 BlDevScripterStep >> wasExecuted [
-	<return: #Boolean>
+
 	^ state wasExecuted
 ]

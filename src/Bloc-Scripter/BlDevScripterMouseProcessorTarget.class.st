@@ -6,7 +6,7 @@ Class {
 
 { #category : #searching }
 BlDevScripterMouseProcessorTarget >> findTargetStartingInSpace: aSpace [
-	^ aSpace testMouseProcessor
+	^ aSpace mouseProcessor
 ]
 
 { #category : #accessing }

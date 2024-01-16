@@ -20,7 +20,7 @@ Class {
 	#classInstVars : [
 		'empty'
 	],
-	#category : 'Bloc-Basic-Support'
+	#category : #'Bloc-Basic-Support'
 }
 
 { #category : #cleanup }
@@ -149,7 +149,7 @@ BlCornerRadii >> dividedByScalar: aNumber [
 BlCornerRadii >> hash [
 
 	^ bottomLeft hash bitXor:
-		  (bottomRight hash bitXor: (topLeft hash bitXor: topLeft))
+		  (bottomRight hash bitXor: (topLeft hash bitXor: topRight hash))
 ]
 
 { #category : #accessing }

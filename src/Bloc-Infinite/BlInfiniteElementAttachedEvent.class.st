@@ -12,29 +12,33 @@ infiniteElement
 
 "
 Class {
-	#name : 'BlInfiniteElementAttachedEvent',
-	#superclass : 'BlEvent',
+	#name : #BlInfiniteElementAttachedEvent,
+	#superclass : #BlEvent,
 	#instVars : [
 		'element'
 	],
-	#category : 'Bloc-Infinite-Events',
-	#package : 'Bloc-Infinite',
-	#tag : 'Events'
+	#category : #'Bloc-Infinite-Events'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 BlInfiniteElementAttachedEvent class >> element: anElement [
 	^ self new
 		element: anElement;
 		yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 BlInfiniteElementAttachedEvent >> element [
 	^ element
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 BlInfiniteElementAttachedEvent >> element: anObject [
 	element := anObject
+]
+
+{ #category : #sending }
+BlInfiniteElementAttachedEvent >> sendTo: anObject [
+
+	anObject infiniteElementAttachedEvent: self
 ]

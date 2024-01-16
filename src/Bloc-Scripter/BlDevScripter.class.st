@@ -70,11 +70,11 @@ BlDevScripter >> continue [
 { #category : #initialization }
 BlDevScripter >> defaultSpace [
 
-	^ BlOSpace new
-		title: 'Scripter';
-		extent: 800 @ 600;
-		host: BlMockedHost new;
-		yourself.
+	^ BlSpace new
+		  title: 'Scripter';
+		  extent: 800 @ 600;
+		  host: BlMockedHost new;
+		  yourself
 ]
 
 { #category : #'accessing - element' }
@@ -92,7 +92,7 @@ BlDevScripter >> element: anElement [
 	anElement addEventFilter: self eventHandler.
 	
 	anElement removeFromParent.
-	self space addChild: anElement.
+	self space root addChild: anElement.
 ]
 
 { #category : #'accessing - element' }

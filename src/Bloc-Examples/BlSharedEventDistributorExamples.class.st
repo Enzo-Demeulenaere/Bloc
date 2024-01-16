@@ -116,14 +116,14 @@ BlSharedEventDistributorExamples >> testMouseEnterEventOneOutOfTwoElements [
 			BlMouseEnterEvent.
 			BlMouseLeaveEvent.
 			BlClickEvent }.
-	anElementOne
-		when: BlMouseEnterEvent
-		do: [ aMouseEnterOne := aMouseEnterOne + 1 ].
-	anElementTwo
-		when: BlMouseEnterEvent
-		do: [ aMouseEnterTwo := aMouseEnterTwo + 1 ].
+	anElementOne addEventHandler: (BlEventHandler
+			 on: BlMouseEnterEvent
+			 do: [ aMouseEnterOne := aMouseEnterOne + 1 ]).
+	anElementTwo addEventHandler: (BlEventHandler
+			 on: BlMouseEnterEvent
+			 do: [ aMouseEnterTwo := aMouseEnterTwo + 1 ]).
 
-	BlOSpace simulateMouseMoveInside: anElementOne.
+	BlSpace simulateMouseMoveInside: anElementOne.
 
 	self assert: aMouseEnterOne equals: 1.
 	self assert: aMouseEnterTwo equals: 1.
@@ -148,23 +148,23 @@ BlSharedEventDistributorExamples >> testMouseLeaveEventOneOutOfTwoElements [
 			BlMouseEnterEvent.
 			BlMouseLeaveEvent.
 			BlClickEvent }.
-	anElementOne
-		when: BlMouseLeaveEvent
-		do: [ aMouseLeaveOne := aMouseLeaveOne + 1 ].
-	anElementTwo
-		when: BlMouseLeaveEvent
-		do: [ aMouseLeaveTwo := aMouseLeaveTwo + 1 ].
+	anElementOne addEventHandler: (BlEventHandler
+			 on: BlMouseLeaveEvent
+			 do: [ aMouseLeaveOne := aMouseLeaveOne + 1 ]).
+	anElementTwo addEventHandler: (BlEventHandler
+			 on: BlMouseLeaveEvent
+			 do: [ aMouseLeaveTwo := aMouseLeaveTwo + 1 ]).
 
 	BlSpace
 		simulateEvents: {
-			BlMouseMoveEvent new
-				position: (BlSpace locationInside: anElementOne);
-				screenPosition: 0@0;
-				yourself.
-			BlMouseMoveEvent new
-				position: (BlSpace locationOutside: aContainer);
-				screenPosition: 0@0;
-				yourself }
+				(BlMouseMoveEvent new
+					 position: (BlSpace locationInside: anElementOne);
+					 screenPosition: 0 @ 0;
+					 yourself).
+				(BlMouseMoveEvent new
+					 position: (BlSpace locationOutside: aContainer);
+					 screenPosition: 0 @ 0;
+					 yourself) }
 		on: aContainer.
 
 	self assert: aMouseLeaveOne equals: 1.

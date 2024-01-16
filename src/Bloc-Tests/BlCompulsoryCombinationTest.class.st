@@ -1,16 +1,14 @@
 Class {
-	#name : 'BlCompulsoryCombinationTest',
-	#superclass : 'TestCase',
+	#name : #BlCompulsoryCombinationTest,
+	#superclass : #TestCase,
 	#instVars : [
 		'combination',
 		'buffer'
 	],
-	#category : 'Bloc-Tests-KeyBinding',
-	#package : 'Bloc-Tests',
-	#tag : 'KeyBinding'
+	#category : #'Bloc-Tests-KeyBinding'
 }
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 BlCompulsoryCombinationTest >> setUp [
 
 	super setUp.
@@ -19,20 +17,14 @@ BlCompulsoryCombinationTest >> setUp [
 	buffer := BlMockedKeyboardBuffer new
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 BlCompulsoryCombinationTest >> testInitialize [
-
-	<sampleInstance>
-	self setUp.
 
 	self assert: combination combinations isEmpty
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 BlCompulsoryCombinationTest >> testKey [
-
-	<sampleInstance>
-	self setUp.
 
 	self assert: combination combinations isEmpty.
 
@@ -57,12 +49,8 @@ BlCompulsoryCombinationTest >> testKey [
 				KeyboardKey C }
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 BlCompulsoryCombinationTest >> testMatch [
-
-	<sampleInstance>
-	<noTest>
-	self setUp.
 
 	buffer pressed: false key: KeyboardKey A.
 	buffer pressed: true key: KeyboardKey B.
@@ -80,11 +68,8 @@ BlCompulsoryCombinationTest >> testMatch [
 	self assert: (combination match: buffer) equals: 0
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 BlCompulsoryCombinationTest >> testMatches [
-
-	<sampleInstance>
-	self setUp.
 
 	buffer pressed: true key: KeyboardKey A.
 	buffer pressed: false key: KeyboardKey B.

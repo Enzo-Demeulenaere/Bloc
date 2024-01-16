@@ -18,7 +18,7 @@ Class {
 	#classVars : [
 		'Empty'
 	],
-	#category : 'Bloc-Basic-Support'
+	#category : #'Bloc-Basic-Support'
 }
 
 { #category : #'instance creation' }
@@ -58,13 +58,13 @@ BlInsets class >> horizontal: aNumber [
 	^ self left: aNumber right: aNumber
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 BlInsets class >> horizontal: aNumberForH vertical: aNumberForV [
 
 	^ self top: aNumberForV left: aNumberForH bottom: aNumberForV right: aNumberForH
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 BlInsets class >> left: l [
 
 	^ self 

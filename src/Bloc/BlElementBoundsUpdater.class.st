@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'changes'
 	],
-	#category : 'Bloc-Basic-Bounds'
+	#category : #'Bloc-Basic-Bounds'
 }
 
 { #category : #'api - changes' }
@@ -17,6 +17,7 @@ BlElementBoundsUpdater >> changeExtentFrom: aPreviousExtent to: aNewExtent of: a
 
 { #category : #'api - changes' }
 BlElementBoundsUpdater >> changePositionFrom: aPreviousPosition to: aNewPosition of: anElement [
+
 	(changes
 		at: anElement
 		ifAbsentPut: [ BlElementBoundsUpdaterChange new element: anElement ])

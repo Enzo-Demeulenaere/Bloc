@@ -610,8 +610,8 @@ BlSpace >> defaultTitle [
 
 { #category : #'window - properties' }
 BlSpace >> densityDpi [
-	"Return the screen density expressed as dots-per-inch"
-	<return: #Number>
+	"Return the screen density expressed as dots-per-inch (a float)"
+
 
 	^ self
 		hostSpaceDo: [ :aHostSpace | aHostSpace densityDpi ]
@@ -944,6 +944,7 @@ BlSpace >> dragboard: anObject [
 
 { #category : #'change - layout' }
 BlSpace >> elementsNeedingLayout [
+
 	^ elementsNeedingLayout
 ]
 
@@ -1088,15 +1089,19 @@ BlSpace >> findMousePickTargetFromEvent: anEvent [
 	I may return nil if no such child is found and if I can not be event target either"
 
 	<return: #BlElement or: nil>
-
-	(self findMouseEventTargetAt: anEvent position) ifNotNil: [
-		:found | " test found because if the result is the root then it means that no element has been found "
-		found ~~ self root ifTrue: [ " ok, dispatch outside event through all the space elements "
-			" dispatch the mouse outside event to all alements of the scene graph "
-			self dispatchMousePickedOutside: ((anEvent newCopyFor: found) asMouseOutsideEvent lastMouseDownEvent: self testMouseProcessor lastMouseDownEvent; yourself).
+	(self findMouseEventTargetAt: anEvent position) ifNotNil: [ :found | " test found because if the result is the root then it means that no element has been found "
+		found ~~ self root ifTrue: [ " dispatch the mouse outside event to all alements of the scene graph "
+			self mouseProcessor isDragging ifFalse: [
+				self dispatchMousePickedOutside:
+					((anEvent newCopyFor: found) asMouseOutsideEvent
+						 lastMouseDownEvent: self mouseProcessor lastMouseDownEvent;
+						 yourself) ].
 			^ found ] ].
 	" no element found at all: all elements receive a outside event"
-	self dispatchMousePickedOutside: (anEvent clone asMouseOutsideEvent  lastMouseDownEvent: self testMouseProcessor lastMouseDownEvent; yourself).
+	self mouseProcessor isDragging ifFalse: [
+		self dispatchMousePickedOutside: (anEvent clone asMouseOutsideEvent
+				 lastMouseDownEvent: self mouseProcessor lastMouseDownEvent;
+				 yourself) ].
 	^ nil
 ]
 
@@ -1126,7 +1131,6 @@ BlSpace >> focusProcessor: aFocusProcessor [
 
 { #category : #'window - properties' }
 BlSpace >> focused [
-	<return: #Boolean>
 
 	^ focused
 ]
@@ -1227,7 +1231,6 @@ BlSpace >> hasInParentChain: anElement [
 { #category : #testing }
 BlSpace >> hasLayoutError [
 	"Return true if there was a layout error, false otherwise"
-	<return: #Boolean>
 
 	^ layoutError isNotNil
 ]
@@ -1446,7 +1449,6 @@ BlSpace >> isFocused [
 { #category : #'change - layout' }
 BlSpace >> isLayoutRequested [
 	"Indicates whether or not root element's layout needs to be updated next frame"
-	<return: #Boolean>
 	
 	^ self root isLayoutRequested or: [ self elementsNeedingLayout isNotEmpty ]
 ]
@@ -1492,7 +1494,6 @@ BlSpace >> knowsPosition [
 	"Return true if this space knows its position.
 	By default, spaces don't know their position and allow the window manager to choose one.
 	Setting an explicit position during space creation will result in a window created at a specified position"
-	<return: #Boolean>
 
 	^ position notNil
 ]
@@ -1553,6 +1554,12 @@ BlSpace >> minimized [
 ]
 
 { #category : #'accessing - processors' }
+BlSpace >> mouseProcessor [
+	
+	^ mouseProcessor 
+]
+
+{ #category : #'accessing - processors' }
 BlSpace >> mouseProcessor: aMouseProcessor [
 	mouseProcessor := aMouseProcessor
 ]
@@ -1580,7 +1587,6 @@ BlSpace >> needsPropertiesComputation: anElement [
 
 { #category : #'NOT-USED-change - style' }
 BlSpace >> needsStyleComputation [
-	<return: #Boolean>
 	
 	^ self elementsNeedingStyle isNotEmpty
 ]
@@ -1686,6 +1692,7 @@ BlSpace >> requestHostSpaceRedraw [
 
 { #category : #'change - layout' }
 BlSpace >> requestLayout: anElement [
+
 	elementsNeedingLayout add: anElement.
 	self requestNextPulse
 ]
@@ -1711,7 +1718,6 @@ BlSpace >> requestStyle: anElement [
 { #category : #'window - properties' }
 BlSpace >> resizable [
 	"Return true if underlying window is resizable, false otherwise"
-	<return: #Boolean>
 
 	^ self
 		hostSpaceDo: [ :aHostSpace | aHostSpace resizable ]
@@ -1862,13 +1868,6 @@ BlSpace >> telemetry: aBlTelemetry [
 	telemetry := aBlTelemetry
 ]
 
-{ #category : #'accessing - processors' }
-BlSpace >> testMouseProcessor [
-	<return: #BlMouseProcessor>
-
-	^ mouseProcessor
-]
-
 { #category : #accessing }
 BlSpace >> time [
 	<return: #BlTime>
@@ -1884,7 +1883,6 @@ BlSpace >> time: aBlTime [
 { #category : #'window - properties' }
 BlSpace >> title [
 	"Return window's title as a string"
-	<return: #String>
 
 	^ self
 		hostSpaceDo: [ :aHostSpace | aHostSpace title ]

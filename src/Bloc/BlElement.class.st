@@ -65,7 +65,7 @@ Class {
 		'visuals',
 		'flags'
 	],
-	#category : 'Bloc-Basic'
+	#category : #'Bloc-Basic'
 }
 
 { #category : #'instance creation' }
@@ -921,15 +921,14 @@ BlElement >> childrenDo: aBlock [
 
 { #category : #'geometry position convertion' }
 BlElement >> childrenPointToLocal: aPoint [
-	"Transform a given point from the local coordinates of my children to my local coordinates"
-	<return: #Point>
+	"Transform and return a given point from the local coordinates of my children to my local coordinates."
 
 	^ aPoint
 ]
 
 { #category : #'api - look' }
 BlElement >> clipChildren [
-	<return: #Boolean>
+	"Return whether the receiver clips children"
 
 	^ visuals clipChildren
 ]
@@ -1162,6 +1161,12 @@ BlElement >> defaultErrorHandler [
 		BlDrawingErrorHandler new.
 		BlLayoutErrorHandler new
 	}
+]
+
+{ #category : #initialization }
+BlElement >> defaultEventDispatcherClass [
+
+	^ BlElementEventDispatcher
 ]
 
 { #category : #initialization }
@@ -1655,7 +1660,6 @@ BlElement >> focusables: aBlFocusFinderCandidates along: aBlFocusSearchDirection
 
 { #category : #'private - accessing' }
 BlElement >> focused [
-	<return: #Boolean>
 
 	^ visuals focused
 ]
@@ -1849,9 +1853,8 @@ BlElement >> globalPointToLocal: aPoint [
 
 { #category : #'geometry position convertion' }
 BlElement >> globalPointToParent: aPoint [
-	"Transform a given point from the coordinates of my root most parent to my parent's coordinates"
-	<return: #Point>
-
+	"Transform and return a given point from the coordinates of my root most parent to my parent's coordinates"
+	
 	^ self hasParent
 		ifTrue: [ self parent globalPointToLocal: aPoint ]
 		ifFalse: [ aPoint ]
@@ -1888,15 +1891,12 @@ BlElement >> globalScale [
 { #category : #'children testing' }
 BlElement >> hasAnyInParentChain: aCollection [
 	"Return true if any one in the given collection in my parent chain (including myself) "
-	<return: #Boolean>
-
 	
 	^ aCollection anySatisfy: [ :e | self hasInParentChain: e ]
 ]
 
 { #category : #'children testing' }
 BlElement >> hasChild: anElement [
-	<return: #Boolean>
 	
 	^ anElement parent == self
 ]
@@ -1919,7 +1919,6 @@ BlElement >> hasCompositionLayer [
 { #category : #'focus testing' }
 BlElement >> hasFocus [
 	"Return true if an element is focused or contains a focused element, false otherwise"
-	<return: #Boolean>
 
 	^ self isFocused or: [
 		self children anySatisfy: [ :anElement | anElement hasFocus ] ]
@@ -1929,7 +1928,6 @@ BlElement >> hasFocus [
 BlElement >> hasFocusable [
 	"Returns true if I am focusable or if I contain a reachable child for which #hasFocusable returns true,
 	false otherwise"
-	<return: #Boolean>
 
 	^ self isFocusable or: [
 		self children anySatisfy: [ :anElement | anElement hasFocusable ] ]
@@ -1974,7 +1972,6 @@ BlElement >> hasParent [
 { #category : #'children testing' }
 BlElement >> hasParent: anElement [
 	"Return true if I have a given element in my parent chain, false otherwise"
-	<return: #Boolean>
 
 	self allParentsDo: [ :aParentElement |
 		aParentElement == anElement
@@ -2068,7 +2065,8 @@ BlElement >> initialize [
 	bounds := BlElementLocalBounds new referenceElement: self.
 	measuredBounds := BlElementLocalBounds new referenceElement: self.
 
-	eventDispatcher := BlElementEventDispatcher on: self.
+	self initializeEventDispatcher.
+	
 	constraints := self defaultLayoutCommonConstraints.
 	self resetChildrenArray.
 
@@ -2087,6 +2085,12 @@ BlElement >> initialize [
 
 	taskQueue := BlTaskQueue new.
 	errorHandler := self defaultErrorHandler
+]
+
+{ #category : #initialization }
+BlElement >> initializeEventDispatcher [
+ 
+	eventDispatcher := self newEventDispatcher
 ]
 
 { #category : #'geometry bounds' }
@@ -2185,7 +2189,6 @@ BlElement >> invalidationBoundsInSpace [
 BlElement >> isAttachedToSceneGraph [
 	"Return true if I am inside of a scene graph, e.g. I have a space's root element
 	as my top-most parent, false otherwise"
-	<return: #Boolean>
 
 	^ spaceReference isAttachedToSceneGraph
 ]
@@ -2220,7 +2223,6 @@ BlElement >> isFocusable [
 BlElement >> isFocused [
 	"Returns true if I am focused, false otherwise.
 	Note: It is possible that an element has focus but is not focused by itself"
-	<return: #Boolean>
 
 	^ self focused
 ]
@@ -2230,7 +2232,6 @@ BlElement >> isFullyVisibleInSpace [
 	"Return true if I am in fully visible in the area of a space (window), false otherwise.
 	Note, that this visibility is computed only based on bounds. 
 	It may happend that I am not visible because of another element."
-	<return: #Boolean>
 
 	| myBounds intersection |
 	self assert: self isAttachedToSceneGraph.
@@ -2262,7 +2263,6 @@ BlElement >> isLayoutBoundary [
 BlElement >> isLayoutRequested [
 	"Indicates whether or not this elements's layout will be requested during the next hierarchy layout pass.
 	Return true if the layout will be forced during next layout pass, false otherwise"
-	<return: #Boolean>
 
 	^ flags hasNeedsLayout
 ]
@@ -2270,7 +2270,6 @@ BlElement >> isLayoutRequested [
 { #category : #testing }
 BlElement >> isOpaque [
 	"Return true if I am completely opaque (my opacity is 1)"
-	<return: #Boolean>
 
 	^ self opacity = 1.0
 ]
@@ -2294,7 +2293,6 @@ BlElement >> isRoot [
 { #category : #testing }
 BlElement >> isTranslucent [
 	"Return true if I am semi-transparent (opacity is 0 < opacity < 1)"
-	<return: #Boolean>
 
 	^ self opacity > 0 and: [ self opacity < 1 ]
 ]
@@ -2323,7 +2321,6 @@ BlElement >> isVisibleInSpace [
 	"Return true if I am in a visible area of a space (window), false otherwise.
 	Note, that this visibility is computed only based on bounds. 
 	It may happend that I am not visible because of another element."
-	<return: #Boolean>
 
 	^ self isAttachedToSceneGraph and: [ 
 		self isVisible and: [
@@ -2335,16 +2332,16 @@ BlElement >> labeled: aString [
 	self id: aString asSymbol
 ]
 
-{ #category : 'children accessing' }
+{ #category : #'children accessing' }
 BlElement >> lastChild [
-	"return the last child"
+	"Return the last child, or signal error if it does not exist."
+  
 	self hasChildren ifFalse: [ ^ self error: 'Must have at least one child' ].
 	^ self children last
 ]
 
-{ #category : 'api - layout' }
+{ #category : #'api - layout' }
 BlElement >> layout [
-	<return: #BlLayout>
 
 	^ layout
 ]
@@ -2712,11 +2709,10 @@ BlElement >> measuredHeight [
 
 { #category : #layout }
 BlElement >> measuredPosition [
-	"Return my measured position used during layout by layout strategies.
+	"Return my measured position (a Point) used during layout by layout strategies.
 	It is being computed during measuring step.
 	@see BlElement>>onMeasure:
 	measuredPosition can not be nil"
-	<return: #Point>
 	
 	^ self measuredBounds position
 ]
@@ -2758,6 +2754,12 @@ BlElement >> needsPropertiesComputation [
 { #category : #'api - style' }
 BlElement >> needsStyle [
 	^ self styles needsStyle
+]
+
+{ #category : #initialization }
+BlElement >> newEventDispatcher [
+
+	^ self defaultEventDispatcherClass on: self
 ]
 
 { #category : #converting }
@@ -2838,7 +2840,7 @@ BlElement >> onAddedToParent [
 BlElement >> onAddedToSceneGraph [
 	"Sent after one of my parents or I was added to scene graph, e.g. root element.
 	At this point #isAttachedToSceneGraph results in true.
-	Note: Always send onAddedToSceneGraph to super class if you override me!"
+	Note: Always send onAddedToSceneGraph to superclass if you override me!"
 
 	self
 		assert: [ self isAttachedToSceneGraph ]
@@ -2850,13 +2852,13 @@ BlElement >> onAddedToSceneGraph [
 { #category : #'hooks - children' }
 BlElement >> onChildAdded: anElement [
 	"I am sent after anElement was added to me as my direct child.
-	Note: Always send onChildAdded: to super class if you override me!"
+	Note: Always send onChildAdded: to superclass if you override me!"
 ]
 
 { #category : #'hooks - children' }
 BlElement >> onChildRemoved: anElement [
 	"I am sent after anElement was ramoved from me and is no longer my direct child.
-	Note: Always send onChildRemoved: to super class if you override me!"
+	Note: Always send onChildRemoved: to superclass if you override me!"
 ]
 
 { #category : #'children dispatching' }
@@ -2865,6 +2867,7 @@ BlElement >> onChildToBeRemoved: anElement [
 	
 	"at this point we should make sure that the focus is transfered to me (its parent) if the removed
 	child (or one of its children) had focus"
+	
 	(self isAttachedToSceneGraph and: [ self space hasFocus: anElement ])
 		ifTrue: [
 			| aPreviousFocusOwner |
@@ -2899,8 +2902,7 @@ BlElement >> onLayout: aBounds context: aBlElementBoundsUpdateContext [
 	"I am sent then and only then when my extent changed as the result of a layout"
 	"By default let layout strategy do the layouting job.
 	If needed override this method to do some additional actions.
-	@see BlLayoutStrategy>>#layout: self in: aBounds - override if
-	custom layout strategy is needed"
+	See `BlLayoutStrategy>>#layout: self in: aBounds` - override if custom layout strategy is needed"
 
 	self layout layout: self in: aBounds context: aBlElementBoundsUpdateContext
 ]
@@ -4060,7 +4062,12 @@ BlElement >> wantsSeparateCompositingLayer [
 { #category : #'geometry hooks' }
 BlElement >> whenLayoutedDo: aBlock [
 
-	self when: BlElementLayoutComputedEvent do: [ :event | aBlock cull: event ].
+	" Evaluate aBlock after each layouting. To use with care and check carefully if you need it.
+	In particular, check that the evaluation of aBlock do not send requestLayout!  "
+
+	self addEventHandler: (BlEventHandler
+			 on: BlElementLayoutComputedEvent
+			 do: [ :event | aBlock cull: event ])
 ]
 
 { #category : #'geometry hooks' }

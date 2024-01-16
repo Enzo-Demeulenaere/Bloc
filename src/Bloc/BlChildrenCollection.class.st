@@ -19,7 +19,7 @@ Subclasses need to provide the implementation for methods adding and removing ch
 Class {
 	#name : #BlChildrenCollection,
 	#superclass : #BlChildren,
-	#category : 'Bloc-Basic-Children'
+	#category : #'Bloc-Basic-Children'
 }
 
 { #category : #'children - adding' }
@@ -78,7 +78,7 @@ BlChildrenCollection >> removeAt: anIndex [
 	self subclassResponsibility
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 BlChildrenCollection >> select: selectBlock thenCollect: collectBlock [
 	"working version replacing Collection>>#select:thenCollect:"
 
@@ -88,7 +88,7 @@ BlChildrenCollection >> select: selectBlock thenCollect: collectBlock [
 			  thenDo: [ :child | str nextPut: (collectBlock value: child) ] ]
 ]
 
-{ #category : 'children - swapping' }
+{ #category : #'children - swapping' }
 BlChildrenCollection >> swapAt: aChildIndex with: anotherChildIndex [
 	| lesserIndex greaterIndex fristChild secondChild  | 
 	aChildIndex = anotherChildIndex

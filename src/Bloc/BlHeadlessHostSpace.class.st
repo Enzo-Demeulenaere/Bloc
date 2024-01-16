@@ -5,20 +5,19 @@ I am a fallback host space that is chosen if there are no other available and su
 Class {
 	#name : #BlHeadlessHostSpace,
 	#superclass : #Object,
-	#traits : 'TBlHostSpace + TBlDebug + TBlSpaceProperties',
-	#classTraits : 'TBlHostSpace classTrait + TBlDebug classTrait + TBlSpaceProperties classTrait',
+	#traits : 'TBlHostSpace + TBlSpaceProperties',
+	#classTraits : 'TBlHostSpace classTrait + TBlSpaceProperties classTrait',
 	#instVars : [
 		'eventFetcher',
 		'position',
 		'title'
 	],
-	#category : 'Bloc-Universe - Host Headless'
+	#category : #'Bloc-Universe - Host Headless'
 }
 
 { #category : #'window - properties' }
 BlHeadlessHostSpace >> borderless [
 	"Return true if underlying window is now borderless, false otherwise"
-	<return: #Boolean>
 	
 	^ false
 ]
@@ -47,8 +46,7 @@ BlHeadlessHostSpace >> cursor: aCursor [
 
 { #category : #'host space - geometry' }
 BlHeadlessHostSpace >> densityDpi [
-	"Return the screen density expressed as dots-per-inch"
-	<return: #Number>
+	"Return the screen density expressed as dots-per-inch (a float)"
 	
 	^ 96.0
 ]
@@ -57,7 +55,6 @@ BlHeadlessHostSpace >> densityDpi [
 BlHeadlessHostSpace >> fullscreen [
 	"Return true if an underlying window is in fullscreen mode,
 	false otherwise"
-	<return: #Boolean>
 
 	^ false
 ]
@@ -72,7 +69,6 @@ BlHeadlessHostSpace >> fullscreen: aBoolean [
 BlHeadlessHostSpace >> fullsize [
 	"Return true if an underlying window is in fullsize mode,
 	false otherwise"
-	<return: #Boolean>
 
 	^ false
 ]
@@ -96,9 +92,10 @@ BlHeadlessHostSpace >> icon: aForm [
 
 { #category : #initialization }
 BlHeadlessHostSpace >> initialize [
+
 	super initialize.
-	
-	eventFetcher := BlHostEventFetcher hostSpace: self.
+
+	eventFetcher := BlHostEventFetcher hostSpace: self
 ]
 
 { #category : #'host space - testing' }
@@ -106,7 +103,6 @@ BlHeadlessHostSpace >> isVisible [
 	"Return true if underlying window is shown, false otherwise.
 	Note: If window was shown and then minimized it is still considered to be visible.
 	Window can become invisible by asking it to hide"
-	<return: #Boolean>
 
 	^ false
 ]
@@ -145,7 +141,6 @@ BlHeadlessHostSpace >> minimized [
 { #category : #'host space - testing' }
 BlHeadlessHostSpace >> needsRebuild [
 	"Return true if window should be recreated after user saved and quit pharo"
-	<return: #Boolean>
 	
 	^ false
 ]
@@ -158,7 +153,7 @@ BlHeadlessHostSpace >> open [
 { #category : #'host space - geometry' }
 BlHeadlessHostSpace >> physicalSize [
 	"Return a physical host size which is what the framebuffer size should be.
-	This size may differ from the logical size on high dpi (retina) screens.
+	This size may differ from the logical size on high-DPI (Retina) screens.
 	In most cases physical size is x2 larger than logical size on retina screens."
 
 	^ BlPhysicalDisplaySize width: 0 height: 0
@@ -167,7 +162,6 @@ BlHeadlessHostSpace >> physicalSize [
 { #category : #'window - properties' }
 BlHeadlessHostSpace >> position [
 	"Return window's position in screen coordinates"
-	<return: #Point>
 	
 	^ position
 ]
@@ -188,7 +182,6 @@ BlHeadlessHostSpace >> render: aSpace [
 { #category : #'window - properties' }
 BlHeadlessHostSpace >> resizable [
 	"Return true if underlying window is resizable, false otherwise"
-	<return: #Boolean>
 
 	^ true
 ]
@@ -205,7 +198,6 @@ BlHeadlessHostSpace >> show [
 { #category : #'window - properties' }
 BlHeadlessHostSpace >> title [
 	"Return window's title as a string"
-	<return: #String>
 
 	^ title
 ]
@@ -229,7 +221,6 @@ BlHeadlessHostSpace >> toFront [
 
 { #category : #'host space - accessing' }
 BlHeadlessHostSpace >> universe [
-	<return: #BlParallelUniverse>
 
 	^ universe
 ]
