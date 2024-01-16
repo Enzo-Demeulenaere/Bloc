@@ -9,6 +9,37 @@ Class {
 }
 
 { #category : #tests }
+BlDemoBasicNodeTest >> testCollectClassWithDependencies [
+
+	| collector dependencies |
+	collector := BlDemoCollector new.
+	collector collectClass: BlDemoData.
+	dependencies := collector classes first dependencies.
+	self assert: dependencies isNotNil.
+	self assert: dependencies first class equals: BlDemoDependencyNode 
+]
+
+{ #category : #tests }
+BlDemoBasicNodeTest >> testCollectClassWithNoDependency [
+
+	| collector dependencies |
+	collector := BlDemoCollector new.
+	collector collectClass: BlDemoData2.
+	dependencies := collector classes first dependencies.
+	self assert: dependencies isNil
+]
+
+{ #category : #tests }
+BlDemoBasicNodeTest >> testCollectDependency [
+
+	| collector classes |
+	collector := BlDemoCollector new.
+	collector collectClass: BlDemoData.
+	classes := collector classes.
+	collector inspect
+]
+
+{ #category : #tests }
 BlDemoBasicNodeTest >> testEnsureClassForWithDifferentClass [
 
 	| demo |

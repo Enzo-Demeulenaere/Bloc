@@ -22,6 +22,12 @@ BlDemoBasicNode >> addChild: aNode [
 	self children add: aNode
 ]
 
+{ #category : #adding }
+BlDemoBasicNode >> addChildren: aCollection [ 
+
+	aCollection do: [ :each | self addChild: each ]
+]
+
 { #category : #accessing }
 BlDemoBasicNode >> children [ 
 	^ children

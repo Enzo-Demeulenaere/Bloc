@@ -39,15 +39,33 @@ BlDemoCollector >> classes [
 ]
 
 { #category : #instanceCreation }
-BlDemoCollector >> collectClass: aClass [ 
-	
+BlDemoCollector >> collectClass: aClass [
+
 	| node pragmas |
 	pragmas := Pragma allNamed: pragma in: aClass.
 	pragmas ifEmpty: [ ^ self ].
 	node := self ensureClassFor: aClass.
-	pragmas do: [ :prag | node addChild: (BlDemoMethodNode new item: prag method ) ].
-	
-	
+	pragmas do: [ :prag |
+		node addChild: (BlDemoMethodNode new item: prag method) ].
+	self collectDependencies: node
+]
+
+{ #category : #'as yet unclassified' }
+BlDemoCollector >> collectDependencies: aClassNode [
+
+	| node dependencies |
+	node := aClassNode.
+	dependencies := OrderedCollection new.
+	node methods do: [ :method |
+		method selfMessages asOrderedCollection do: [ :e |
+			|selectors|
+			selectors := node item methodDict values collect: [ :each | each selector ].
+			(selectors includes: e) ifTrue: [ 
+				|m|
+				m := node item methodNamed: e.
+				dependencies add: (BlDemoDependencyNode withItem: m) ] ] ].
+	node dependencies: dependencies.
+	node addChildren: dependencies
 ]
 
 { #category : #instanceCreation }

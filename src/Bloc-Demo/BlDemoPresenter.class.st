@@ -42,11 +42,11 @@ BlDemoPresenter >> connectPresenters [
 
 	tree whenSelectedItemChangedDo: [ :item |
 		item ifNotNil: [
-			item class = BlDemoMethodNode
-				ifTrue: [
-					code beForMethod: item item.
-					code text: item sourceCode.
-					self executeCode ] ] ]
+			(item class = BlDemoMethodNode or: [
+				 item class inheritsFrom: BlDemoMethodNode ]) ifTrue: [
+				code beForMethod: item item.
+				code text: item sourceCode.
+				self executeCode ] ] ]
 ]
 
 { #category : #layout }

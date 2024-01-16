@@ -5,6 +5,12 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+BlDemoData >> dependencyBackground [ 
+
+	^ Color red
+]
+
+{ #category : #'as yet unclassified' }
 BlDemoData >> returnBlElement [
 
 	<demo>
@@ -23,4 +29,11 @@ BlDemoData >> returnBlElementWithADifferentPragma [
 
 	<demo2>
 	^ BlElement new background: Color blue
+]
+
+{ #category : #'as yet unclassified' }
+BlDemoData >> returnBlElementWithDependency [
+
+	<demo>
+	^ BlElement new background: self dependencyBackground
 ]
