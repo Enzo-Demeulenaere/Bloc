@@ -53,19 +53,17 @@ BlDemoCollector >> collectClass: aClass [
 { #category : #'as yet unclassified' }
 BlDemoCollector >> collectDependencies: aClassNode [
 
-	| node dependencies |
+	| node selfSender |
 	node := aClassNode.
-	dependencies := OrderedCollection new.
-	node methods do: [ :method |
-		method selfMessages asOrderedCollection do: [ :e |
-			|selectors|
-			selectors := node item methodDict values collect: [ :each | each selector ].
-			(selectors includes: e) ifTrue: [ 
-				|m|
-				m := node item methodNamed: e.
-				dependencies add: (BlDemoDependencyNode withItem: m) ] ] ].
-	node dependencies: dependencies.
-	node addChildren: dependencies
+	selfSender := BlSelfSender new filtersNoise.
+	node children do: [ :each |
+		selfSender visitMethodNode: each item ast ].
+	selfSender selfCompiledMethods do: [ :method |
+		(node includes: method) ifFalse: [
+			|dependencyNode|
+			dependencyNode := BlDemoDependencyNode withItem: method.
+			node dependencies add: dependencyNode.
+			node addChild: dependencyNode ] ]
 ]
 
 { #category : #instanceCreation }

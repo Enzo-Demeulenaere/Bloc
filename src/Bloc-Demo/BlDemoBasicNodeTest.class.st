@@ -5,7 +5,7 @@ Class {
 		'class',
 		'class2'
 	],
-	#category : #'Bloc-Demo-NodeTests'
+	#category : #'Bloc-Demo-Tests'
 }
 
 { #category : #tests }
@@ -15,7 +15,7 @@ BlDemoBasicNodeTest >> testCollectClassWithDependencies [
 	collector := BlDemoCollector new.
 	collector collectClass: BlDemoData.
 	dependencies := collector classes first dependencies.
-	self assert: dependencies isNotNil.
+	self assert: dependencies isNotEmpty .
 	self assert: dependencies first class equals: BlDemoDependencyNode 
 ]
 
@@ -26,7 +26,7 @@ BlDemoBasicNodeTest >> testCollectClassWithNoDependency [
 	collector := BlDemoCollector new.
 	collector collectClass: BlDemoData2.
 	dependencies := collector classes first dependencies.
-	self assert: dependencies isNil
+	self assert: dependencies isEmpty
 ]
 
 { #category : #tests }
@@ -36,7 +36,6 @@ BlDemoBasicNodeTest >> testCollectDependency [
 	collector := BlDemoCollector new.
 	collector collectClass: BlDemoData.
 	classes := collector classes.
-	collector inspect
 ]
 
 { #category : #tests }
