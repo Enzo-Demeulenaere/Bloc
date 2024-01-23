@@ -23,32 +23,30 @@ BlFlapHandle >> defaultBackground [
 { #category : #accessing }
 BlFlapHandle >> defaultLabel [
 
-	| lab textSize |
+	| lab |
 	lab := BlTextElement text: ('New Flap' asRopedText
 			        fontSize: 15;
 			        yourself).
 	lab forceLayout.
-	textSize := lab size.
-
-	lab transformDo: [ :t |
-		t translateBy: 0 @ textSize y negated.
-		t topLeftOrigin.
-		t rotateBy: 90 ].
-	lab size: lab transformedBounds extent.
+	
 	^ lab
 ]
 
 { #category : #'as yet unclassified' }
-BlFlapHandle >> drag [
+BlFlapHandle >> dragTo: aPosition [
 
-	| mousePos spaceExtent newY |
+	| spaceExtent newY tempPos |
 	self flap isOpen ifFalse: [ self flap open ].
-	mousePos := self space testMouseProcessor lastMouseMoveEvent position.
+	tempPos := aPosition.
 	spaceExtent := self space extent.
-	self flap container width: (mousePos x < 50
+	self flap container width: (tempPos x < 50
 			 ifTrue: [ 50 ]
-			 ifFalse: [ mousePos x min: spaceExtent x - 100 ]).
-	newY := mousePos y.
+			 ifFalse: [ tempPos x min: spaceExtent x - 100 ]).
+	"self position: self position x @ aPosition y
+	
+	redefining the position doesn't work as the AlignCenter constraint overwrites the position.
+	Use another alignment constraint of delete somehow the current constraint"
+	newY := tempPos y.
 	newY := newY < 0
 		        ifTrue: [ 0 ]
 		        ifFalse: [ newY min: spaceExtent y - self height ].
@@ -68,6 +66,8 @@ BlFlapHandle >> flap: aBlFlap [
 
 	flap := aBlFlap.
 	self background: aBlFlap defaultColor.
+	self initializeGeometry.
+	self initializeLabel
 ]
 
 { #category : #initialization }
@@ -77,33 +77,77 @@ BlFlapHandle >> initialize [
 	self layout: BlFrameLayout new.
 	self constraintsDo: [ :c |
 		c vertical fitContent.
-		c horizontal fitContent.
-		c linear vertical alignCenter ].
+		c horizontal fitContent ].
 	self padding: (BlInsets all: 10).
 	self background: self defaultBackground.
-	self geometry:
-		(BlRoundedRectangleGeometry cornerRadii: (BlCornerRadii new
-				  topLeft: 0;
-				  topRight: 15;
-				  bottomLeft: 0;
-				  bottomRight: 15;
-				  yourself)).
-	self label: self defaultLabel.
-	self addChild: self label.
-	self initializeEvents
+	self initializeEvents.
+	"self addChild: (BlElement new
+			 background: Color red;
+			 size: 5 @ 5;
+			 yourself)"
+	"self addEventHandler: (BlPullHandler new
+			 disallowOutOfBounds;
+			 yourself)"
 ]
 
 { #category : #initialization }
 BlFlapHandle >> initializeEvents [
 
+	| offset |
 	self addEventHandlerOn: BlClickEvent do: [ :e |
 		e button
 			ifPrimary: [ self primaryClick ]
 			secondary: [ self secondaryClick ]
 			middle: [ ^ self ]
 			other: [ ^ self ] ].
-	self addEventHandlerOn: BlBaseDragEvent do: [
-		self drag ]
+	self addEventHandlerOn: BlDragStartEvent do: [ :event |
+		event consumed: true.
+		offset := event position - self position.
+		"'event :' traceCr.
+		event position traceCr.
+		'handle pos :' traceCr.
+		self position traceCr.
+		'offset :' traceCr.
+		offset traceCr.
+		'bounds :' traceCr.
+		self bounds traceCr" ].
+
+	self addEventHandlerOn: BlDragEvent do: [ :event |
+		self dragTo: event position - offset
+		"'event :' traceCr.
+		event position traceCr.
+		'handle pos :' traceCr.
+		self position traceCr.
+		'offset :' traceCr.
+		offset traceCr.
+		'bounds :' traceCr.
+		self bounds traceCr" ]
+]
+
+{ #category : #initialization }
+BlFlapHandle >> initializeGeometry [
+
+	| leftRadii rightRadii |
+	leftRadii := (self flap edge == #left)
+		             ifTrue: [ 0 ]
+		             ifFalse: [ 15 ].
+	rightRadii := (self flap edge == #right)
+		              ifTrue: [ 15 ]
+		              ifFalse: [ 0 ].
+	self geometry:
+		(BlRoundedRectangleGeometry cornerRadii: (BlCornerRadii new
+				  topLeft: leftRadii;
+				  topRight: rightRadii;
+				  bottomLeft: leftRadii;
+				  bottomRight: rightRadii;
+				  yourself))
+]
+
+{ #category : #initialization }
+BlFlapHandle >> initializeLabel [
+
+	label := self defaultLabel.
+	self addChild: label
 ]
 
 { #category : #accessing }
@@ -131,9 +175,8 @@ BlFlapHandle >> rotateBy: anAngle [
 	self transform rotateBy: anAngle; apply
 ]
 
-{ #category : #events }
-BlFlapHandle >> secondaryClick [
+{ #category : #'steps - interactions' }
+BlFlapHandle >> secondaryClick [ 
 
-	self flap openPercentage: (0.1 to: 0.9 by: 0.05) atRandom.
-	self flap updateSize
+	self inform: 'TODO: Context Menu'
 ]

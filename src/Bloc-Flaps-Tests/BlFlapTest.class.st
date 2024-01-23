@@ -1,8 +1,72 @@
 Class {
 	#name : #BlFlapTest,
-	#superclass : #TestCase,
+	#superclass : #BlParameterizedHostTest,
 	#category : #'Bloc-Flaps-Tests'
 }
+
+{ #category : #tests }
+BlFlapTest >> testClickOnHandleToCloseAndOpenAgain [
+
+	| flap |
+	flap := BlFlap new.
+
+	self assert: flap isOpen.
+	self assert: flap container visibility equals: BlVisibility visible.
+	BlSpace simulateClickOn: flap handle.
+	self deny: flap isOpen.
+	self assert: flap container visibility equals: BlVisibility gone.
+	BlSpace simulateClickOn: flap handle.
+	self assert: flap isOpen.
+	self assert: flap container visibility equals: BlVisibility visible.
+]
+
+{ #category : #tests }
+BlFlapTest >> testDragChangesHandlePosition [
+
+	| flap space handlePosition |
+	space := self newTestingSpace.
+	flap := BlHorizontalFlap new addToSpace: space.
+	self waitTestingSpaces.
+	handlePosition := flap handle position.
+
+	self assert: flap isOpen.
+	BlSpace simulateDragOn: flap handle by: (BlVector x: 20 y: 30).
+	self assert: flap isOpen.
+	self waitTestingSpaces.
+	self assert: flap handle position equals: handlePosition + (20 @ 30)
+]
+
+{ #category : #tests }
+BlFlapTest >> testDragChangesHandlePositionHorizontal [
+
+	| flap space handlePosition |
+	space := self newTestingSpace.
+	flap := BlHorizontalFlap new addToSpace: space.
+	self waitTestingSpaces.
+	handlePosition := flap handle position.
+
+	self assert: flap isOpen.
+	BlSpace simulateDragOn: flap handle by: (BlVector x: 20 y: 30).
+	self assert: flap isOpen.
+	self waitTestingSpaces.
+	self assert: flap handle position equals: handlePosition + (20 @ 30)
+]
+
+{ #category : #tests }
+BlFlapTest >> testDragChangesHandlePositionVertical [
+
+	| flap space handlePosition |
+	space := self newTestingSpace.
+	flap := BlVerticalFlap new addToSpace: space.
+	self waitTestingSpaces.
+	handlePosition := flap handle position.
+
+	self assert: flap isOpen.
+	BlSpace simulateDragOn: flap handle by: (BlVector x: 20 y: 30).
+	self assert: flap isOpen.
+	self waitTestingSpaces.
+	self assert: flap handle position equals: handlePosition + (20 @ 30)
+]
 
 { #category : #tests }
 BlFlapTest >> testExampleContainerAndHandleAligned [
@@ -42,15 +106,14 @@ BlFlapTest >> testExampleContainerAndHandleAligned [
 ]
 
 { #category : #tests }
-BlFlapTest >> testFlapAddedOnTheRightOfASpace [
+BlFlapTest >> testFlapAddedInASpace [
 
 	| flap space |
 	space := BlSpace new extent: 500 @ 500.
 
 	flap := BlFlap new addToSpace: space.
 
-	self assert: flap edge equals: #right.
-	self assert: flap parent equals: space root.
+	self assert: flap parent equals: space root
 ]
 
 { #category : #tests }
@@ -60,9 +123,8 @@ BlFlapTest >> testFlapCorrectlyInitialized [
 	flap := BlFlap new.
 
 	self assert: flap class equals: BlFlap.
-	self assert: flap edge equals: #right.
-	self assert: flap handle class equals: BlFlapHandle.
-	self assert: flap container class equals: BlThumbnailContainer.
+	self assert: flap handle class equals: BlHorizontalFlapHandle.
+	self assert: flap container class equals: BlHorizontalThumbnailContainer.
 	self assert: flap isOpen.
 	self assert: flap openPercentage equals: 0.1
 ]

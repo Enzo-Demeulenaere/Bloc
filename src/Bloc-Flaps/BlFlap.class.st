@@ -52,8 +52,9 @@ BlFlap >> defaultColor [
 ]
 
 { #category : #'as yet unclassified' }
-BlFlap >> defaultEdge [ 
-	^ #right
+BlFlap >> defaultEdge [
+
+	^ #left
 ]
 
 { #category : #'as yet unclassified' }
@@ -84,27 +85,39 @@ BlFlap >> initialize [
 	edge := self defaultEdge.
 	open := true.
 	openPercentage := self defaultOpenPercentage.
+	self initializeConstraints.
+	self initializeLayout.
+	self initializeContainer.
+	self initializeHandle
+]
+
+{ #category : #'as yet unclassified' }
+BlFlap >> initializeConstraints [ 
+	
 	self constraintsDo: [ :c |
 		c vertical matchParent.
 		c horizontal fitContent ].
-	self layout: BlLinearLayout horizontal.
-	self initializeContainer.
-	self initializeHandle
 ]
 
 { #category : #initialization }
 BlFlap >> initializeContainer [
 
-	container := BlThumbnailContainer new flap: self.
-	self addChild: container.
-	 
+	container := BlHorizontalThumbnailContainer new flap: self.
+	self addChild: container
 ]
 
 { #category : #'as yet unclassified' }
 BlFlap >> initializeHandle [
 
-	handle := BlFlapHandle new flap: self.
-	self addChild: self handle.
+	handle := BlHorizontalFlapHandle new flap: self.
+	handle constraintsDo: [ :c | c linear vertical alignCenter ].
+	self addChild: handle
+]
+
+{ #category : #initialization }
+BlFlap >> initializeLayout [ 
+
+	self layout: BlLinearLayout horizontal
 ]
 
 { #category : #testing }

@@ -2335,14 +2335,14 @@ BlElement >> labeled: aString [
 	self id: aString asSymbol
 ]
 
-{ #category : 'children accessing' }
+{ #category : #'children accessing' }
 BlElement >> lastChild [
 	"return the last child"
 	self hasChildren ifFalse: [ ^ self error: 'Must have at least one child' ].
 	^ self children last
 ]
 
-{ #category : 'api - layout' }
+{ #category : #'api - layout' }
 BlElement >> layout [
 	<return: #BlLayout>
 

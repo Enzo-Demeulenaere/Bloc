@@ -93,7 +93,7 @@ BlColorPaint >> matchExtent: anExtent [
 	"do nothing for color paint"
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 BlColorPaint >> printOn: aStream [
 	"Generate a string representation of the receiver based on its instance variables."
 

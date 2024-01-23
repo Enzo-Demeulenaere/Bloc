@@ -36,10 +36,8 @@ BlThumbnailContainer >> initialize [
 
 	super initialize.
 	elements := OrderedCollection new.
-	"self geometry: (BlRoundedRectangleGeometry cornerRadius: 10)."
-	self layout: BlFlowLayout vertical.
-	self constraintsDo: [ :c |
-		c vertical matchParent ].
+	self initializeLayout.
+	self initializeConstraints.
 	self initializeBackground.
 	self initializeBorder
 ]
@@ -55,4 +53,16 @@ BlThumbnailContainer >> initializeBackground [
 BlThumbnailContainer >> initializeBorder [
 
 	self border: (BlBorder paint: self defaultColor darker width: 5)
+]
+
+{ #category : #initialization }
+BlThumbnailContainer >> initializeConstraints [ 
+
+	self constraintsDo: [ :c | c vertical matchParent ].
+]
+
+{ #category : #initialization }
+BlThumbnailContainer >> initializeLayout [.
+
+	self layout: BlFlowLayout vertical.
 ]
