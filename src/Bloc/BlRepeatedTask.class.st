@@ -72,7 +72,6 @@ BlRepeatedTask >> initialize [
 
 { #category : #'api - testing' }
 BlRepeatedTask >> isRunning [
-	<return: #Boolean>
 
 	^ isRunning
 ]

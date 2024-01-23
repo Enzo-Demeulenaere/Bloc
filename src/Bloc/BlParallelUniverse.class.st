@@ -299,7 +299,6 @@ BlParallelUniverse >> hasSpace: aSpace [
 { #category : #'api - spaces' }
 BlParallelUniverse >> hasSpaces [
 	"Return true if there are registered spaces, false otherwise"
-	<return: #Boolean>
 
 	^ spaceManager hasSpaces
 ]

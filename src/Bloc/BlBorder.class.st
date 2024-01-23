@@ -28,18 +28,20 @@ Class {
 
 { #category : #'instance creation' }
 BlBorder class >> builder [
+
 	^ BlBorderBuilder new
 ]
 
 { #category : #cleanup }
 BlBorder class >> cleanUp [
+
 	super cleanUp.
-	
 	empty := nil
 ]
 
 { #category : #accessing }
 BlBorder class >> empty [
+
 	^ empty ifNil: [ empty := self paint: BlPaint transparent width: 0 ]
 ]
 
@@ -180,8 +182,8 @@ BlBorder >> opacity: aNumber [
 
 { #category : #accessing }
 BlBorder >> paint [
-	<return: #BlPaint>
-
+	"Return the paing of the receiver, an instance of BlPaint or subclasses."
+	
 	^ paint
 ]
 

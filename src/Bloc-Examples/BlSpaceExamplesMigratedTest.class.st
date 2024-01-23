@@ -64,9 +64,9 @@ BlSpaceExamplesMigratedTest >> testChangeIcon [
 	aSpace := self testEmptySpace.
 
 	aCollection := OrderedCollection new.
-	aSpace
-		when: BlSpaceIconChangedEvent
-		do: [ :anEvent | aCollection add: anEvent ].
+	aSpace addEventHandler: (BlEventHandler
+			 on: BlSpaceIconChangedEvent
+			 do: [ :anEvent | aCollection add: anEvent ]).
 
 	aSpace icon: self iconStencil.
 
@@ -87,7 +87,7 @@ BlSpaceExamplesMigratedTest >> testEmptySpace [
 
 	<sampleInstance>
 	| aSpace |
-	aSpace := BlOSpace new.
+	aSpace := BlSpace new.
 	self assert: aSpace session equals: Smalltalk session.
 	self assert: aSpace root hasChildren not.
 	self deny: aSpace hasDirtyElements.

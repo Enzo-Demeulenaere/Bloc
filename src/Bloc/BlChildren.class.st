@@ -183,8 +183,8 @@ BlChildren >> fourth [
 
 { #category : #testing }
 BlChildren >> hasSuperset [
-	<return: #Boolean>
 	"I indicate whether or not the intent is to iterate over the complete set of children of an element."
+	
 	 ^ false
 ]
 
@@ -248,7 +248,6 @@ BlChildren >> isCollection [
 
 { #category : #'children - testing' }
 BlChildren >> isEmpty [
-	<return: #Boolean>
 
 	^ self size isZero
 ]

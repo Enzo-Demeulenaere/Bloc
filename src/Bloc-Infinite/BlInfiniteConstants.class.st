@@ -1,6 +1,6 @@
 Class {
-	#name : 'BlInfiniteConstants',
-	#superclass : 'SharedPool',
+	#name : #BlInfiniteConstants,
+	#superclass : #SharedPool,
 	#classVars : [
 		'NoId',
 		'NoPosition',
@@ -8,14 +8,11 @@ Class {
 		'ScrollIdle',
 		'ScrollSettling'
 	],
-	#category : 'Bloc-Infinite-Core',
-	#package : 'Bloc-Infinite',
-	#tag : 'Core'
+	#category : #'Bloc-Infinite-Core'
 }
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 BlInfiniteConstants class >> initialize [
-	super initialize.
 	
 	NoPosition := 0. "I am used (instead of nil) when data source position is undefined"
 	NoId := 0. "I am used (instead of nil) when item id is undefined"

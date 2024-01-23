@@ -1,6 +1,6 @@
-Extension { #name : 'BlCompositeBackgroundTest' }
+Extension { #name : #BlCompositeBackgroundTest }
 
-{ #category : '*Bloc-Alexandrie-Tests' }
+{ #category : #'*Bloc-Alexandrie-Tests' }
 BlCompositeBackgroundTest >> testAeApplyTo [
 
 	| space background blElement backgroundList |
@@ -11,5 +11,5 @@ BlCompositeBackgroundTest >> testAeApplyTo [
 	blElement := BlElement new background: background; yourself.
 	space root addChild: blElement.
 	
-	space aeAsForm. "check no errors"
+	space root aeAsForm. "smoke test"
 ]

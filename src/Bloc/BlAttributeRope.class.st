@@ -10,7 +10,7 @@ Class {
 		'attributes',
 		'rope'
 	],
-	#category : 'Bloc-DataStructure - Rope'
+	#category : #'Bloc-DataStructure - Rope'
 }
 
 { #category : #initialization }
@@ -38,6 +38,31 @@ BlAttributeRope class >> combineAttributed: aLeftAttributeRope and: aRightAttrib
 	^ self
 		attributes: aLeftAttributeRope attributes
 		rope: (self concatenate: aLeftAttributeRope rope and: aRightAttributeRope rope)
+]
+
+{ #category : #utility }
+BlAttributeRope class >> mergeAttributes: aCollectionOfAttributes and: anotherCollectionOfAttributes [
+	"Merge two collection of attributes letting anotherCollectionOfAttributes to override
+	attributes from aCollectionOfAttributes based on its type"
+	<return: #Collection of: #Object>
+	| anOrderedDictionary |
+	
+	((aCollectionOfAttributes isKindOf: HashedCollection) or: [ anotherCollectionOfAttributes isKindOf: HashedCollection ])
+		ifTrue: [ self notify: 'Hashed collection is unordered, so the order of attributes will be ignored!' ].
+	
+	anOrderedDictionary := OrderedDictionary new.
+
+	aCollectionOfAttributes do: [ :each | anOrderedDictionary at: (self typeOf: each) put: each ].
+	anotherCollectionOfAttributes do: [ :each | anOrderedDictionary at: (self typeOf: each) put: each ].
+
+	^ anOrderedDictionary values
+]
+
+{ #category : #utility }
+BlAttributeRope class >> typeOf: anObject [
+
+	^[anObject type] onErrorDo: [:ex | anObject]
+	
 ]
 
 { #category : #'rope - accessing' }
@@ -207,7 +232,6 @@ BlAttributeRope >> isAttributed [
 { #category : #'rope - testing' }
 BlAttributeRope >> isEmpty [
 	"Attribute rope is empty then and only then when attributes and underlying rope are empty"
-	<return: #Boolean>
 
 	^ self attributes isEmpty and: [ self rope isEmpty ]
 ]

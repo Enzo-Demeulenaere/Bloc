@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 BlSpaceFrameStylePhase >> name [
-	<return: #String>
+	"Return the string representing the name of the receiver."
 	
 	^ 'Style'
 ]

@@ -23,7 +23,7 @@ BlImageBackground class >> image: aForm [
 
 { #category : #accessing }
 BlImageBackground >> image [
-	<return: #Form>
+	"Return the form that represents the visual of the background."
 
 	^ image
 ]

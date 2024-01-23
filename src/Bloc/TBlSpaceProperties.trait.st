@@ -87,7 +87,6 @@ TBlSpaceProperties >> position: aPoint [
 { #category : #'window - properties' }
 TBlSpaceProperties >> resizable [
 	"Return true if underlying window is resizable, false otherwise"
-	<return: #Boolean>
 
 	^ self explicitRequirement
 ]

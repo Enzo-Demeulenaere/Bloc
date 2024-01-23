@@ -1,7 +1,7 @@
 Class {
 	#name : #BlSpaceFrameEventPhase,
 	#superclass : #BlSpaceFramePhase,
-	#category : #'Bloc-Space - Frame'
+	#category : 'Bloc-Space - Frame'
 }
 
 { #category : #testing }
@@ -42,5 +42,5 @@ BlSpaceFrameEventPhase >> runOn: aSpace [
 								theSpace eventDispatcher dispatchEvent: anEvent ] ]  ] ].
 				
 				theSpace hostSpaceDo: [ :aHostSpace | aHostSpace generateEvents ] ].
-			theSpace testMouseProcessor generateEvents ]
+			theSpace mouseProcessor generateEvents ]
 ]

@@ -42,15 +42,14 @@ BlOSWindowHostSpace >> close [
 ]
 
 { #category : #'host space - cursor' }
-BlOSWindowHostSpace >> cursor: aBlCursor [
+BlOSWindowHostSpace >> cursor: aCursor [
 
-	window setMouseCursor: aBlCursor asForm
+	window setMouseCursor: aCursor
 ]
 
 { #category : #'host space - geometry' }
 BlOSWindowHostSpace >> densityDpi [
-	"Return the screen density expressed as dots-per-inch"
-	<return: #Number>
+	"Return the screen density expressed as dots-per-inch (a float)"
 	
 	^ 96.0
 ]
@@ -224,7 +223,6 @@ BlOSWindowHostSpace >> render: aSpace [
 { #category : #'window - properties' }
 BlOSWindowHostSpace >> resizable [	
 	"Return true if underlying window is resizable, false otherwise"
-	<return: #Boolean>
 
 	^ window resizable
 ]

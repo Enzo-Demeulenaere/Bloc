@@ -70,11 +70,11 @@ BlDevScripter >> continue [
 { #category : #initialization }
 BlDevScripter >> defaultSpace [
 
-	^ BlOSpace new
-		title: 'Scripter';
-		extent: 800 @ 600;
-		host: BlMockedHost new;
-		yourself.
+	^ BlSpace new
+		  title: 'Scripter';
+		  extent: 800 @ 600;
+		  host: BlMockedHost new;
+		  yourself
 ]
 
 { #category : #'accessing - element' }
@@ -92,7 +92,7 @@ BlDevScripter >> element: anElement [
 	anElement addEventFilter: self eventHandler.
 	
 	anElement removeFromParent.
-	self space addChild: anElement.
+	self space root addChild: anElement.
 ]
 
 { #category : #'accessing - element' }
@@ -106,7 +106,7 @@ BlDevScripter >> elementWithoutParent [
 
 { #category : #'private - accessing' }
 BlDevScripter >> eventHandler [
-	<return: #BlDevScripterEventCollectorHandler>
+
 	^ eventHandler
 ]
 
@@ -130,17 +130,21 @@ BlDevScripter >> extent: aPoint [
 
 { #category : #initialization }
 BlDevScripter >> initialize [
+
 	super initialize.
 	events := BlDevScripterEvents new.
 
 	rootStep := BlDevScripterRootStep new.
 	rootStep referenceHere.
 
-	eventHandler := BlDevScripterEventCollectorHandler new scripter: self.
+	eventHandler :=
+		BlDevScripterEventCollectorHandler new
+			scripter: self;
+			yourself.
 
 	space := self defaultSpace.
-	self space addEventFilter: self eventHandler.
-	self space root addEventFilter: self eventHandler
+	space addEventFilter: self eventHandler.
+	space root addEventFilter: self eventHandler
 ]
 
 { #category : #'accessing - data' }

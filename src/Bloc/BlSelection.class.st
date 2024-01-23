@@ -63,7 +63,6 @@ BlSelection >> children [
 { #category : #'api - testing' }
 BlSelection >> contains: anIndex [
 	"Return true if this selection interval includes a given index, false otherwise"
-	<return: #Boolean>
 	
 	^ self subclassResponsibility
 ]
@@ -72,7 +71,6 @@ BlSelection >> contains: anIndex [
 BlSelection >> containsIndex: anIndex [
 	"Return true if selection indices include a given index, false otherwise.
 	I am conceptually same as (self indices includes: anIndex)"
-	<return: #Boolean>
 
 	^ self subclassResponsibility
 ]

@@ -93,7 +93,6 @@ BlElementStates >> initialize [
 
 { #category : #testing }
 BlElementStates >> isDisabled [
-	<return: #Boolean>
 
 	^ self hasState: BlElementState disabled
 ]

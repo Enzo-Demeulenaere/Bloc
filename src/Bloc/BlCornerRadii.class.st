@@ -149,7 +149,7 @@ BlCornerRadii >> dividedByScalar: aNumber [
 BlCornerRadii >> hash [
 
 	^ bottomLeft hash bitXor:
-		  (bottomRight hash bitXor: (topLeft hash bitXor: topLeft))
+		  (bottomRight hash bitXor: (topLeft hash bitXor: topRight hash))
 ]
 
 { #category : #accessing }

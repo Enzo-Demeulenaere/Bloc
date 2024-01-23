@@ -1,28 +1,27 @@
 Class {
-	#name : #BlClickEventExamplesTest,
+	#name : #BlClickEventTest,
 	#superclass : #TestCase,
-	#traits : 'TBlDevScripterExamples + TAssertable',
-	#classTraits : 'TBlDevScripterExamples classTrait + TAssertable classTrait',
+	#traits : 'TBlDevScripterExamples',
+	#classTraits : 'TBlDevScripterExamples classTrait',
 	#category : #'Bloc-Examples-Event'
 }
 
-{ #category : #'examples - elements' }
-BlClickEventExamplesTest >> element [
+{ #category : #'running - elements' }
+BlClickEventTest >> element [
 
-	<sampleInstance>
 	^ BlElement new
 		  layout: BlLinearLayout vertical;
 		  border: (BlBorder paint: Color gray width: 1);
 		  background: Color purple muchLighter;
 		  constraintsDo: [ :c |
 			  c horizontal matchParent.
-			  c vertical matchParent ]
+			  c vertical matchParent ];
+		yourself
 ]
 
-{ #category : #'examples - events' }
-BlClickEventExamplesTest >> testClickInHiddenChild [
+{ #category : #tests }
+BlClickEventTest >> testClickInHiddenChild [
 
-	<sampleInstance>
 	| aScripter |
 	aScripter := self twoElementsInScripter.
 
@@ -42,13 +41,12 @@ BlClickEventExamplesTest >> testClickInHiddenChild [
 				self assert: aClickCollection size equals: 1.
 				self assert: aClickCollection first equals: #parent ] ].
 
-	^ aScripter syncContinue
+	aScripter syncContinue
 ]
 
-{ #category : #'examples - events' }
-BlClickEventExamplesTest >> testClickInHiddenChildAndVisibleClippedGrandchild [
+{ #category : #tests }
+BlClickEventTest >> testClickInHiddenChildAndVisibleClippedGrandchild [
 
-	<sampleInstance>
 	| aScripter |
 	aScripter := self threeElementsWithTrueChildClippingInScripter.
 
@@ -70,13 +68,12 @@ BlClickEventExamplesTest >> testClickInHiddenChildAndVisibleClippedGrandchild [
 				self assert: aClickCollection size equals: 1.
 				self assert: aClickCollection first equals: #parent ] ].
 
-	^ aScripter syncContinue
+	aScripter syncContinue
 ]
 
-{ #category : #'examples - events' }
-BlClickEventExamplesTest >> testClickInHiddenChildAndVisibleGrandchild [
+{ #category : #tests }
+BlClickEventTest >> testClickInHiddenChildAndVisibleGrandchild [
 
-	<sampleInstance>
 	| aScripter |
 	aScripter := self threeElementsInScripter.
 
@@ -98,13 +95,12 @@ BlClickEventExamplesTest >> testClickInHiddenChildAndVisibleGrandchild [
 				self assert: aClickCollection size equals: 1.
 				self assert: aClickCollection first equals: #parent ] ].
 
-	^ aScripter syncContinue
+	aScripter syncContinue
 ]
 
-{ #category : #'examples - events' }
-BlClickEventExamplesTest >> testClickInHiddenChildAndVisibleUnclippedGrandchild [
+{ #category : #tests }
+BlClickEventTest >> testClickInHiddenChildAndVisibleUnclippedGrandchild [
 
-	<sampleInstance>
 	| aScripter |
 	aScripter := self threeElementsWithFalseChildClippingInScripter.
 
@@ -126,13 +122,12 @@ BlClickEventExamplesTest >> testClickInHiddenChildAndVisibleUnclippedGrandchild 
 				self assert: aClickCollection size equals: 1.
 				self assert: aClickCollection first equals: #parent ] ].
 
-	^ aScripter syncContinue
+	aScripter syncContinue
 ]
 
-{ #category : #'examples - events' }
-BlClickEventExamplesTest >> testClickInParentWithGoneChild [
+{ #category : #tests }
+BlClickEventTest >> testClickInParentWithGoneChild [
 
-	<sampleInstance>
 	| aScripter |
 	aScripter := self twoElementsInScripter.
 
@@ -152,13 +147,12 @@ BlClickEventExamplesTest >> testClickInParentWithGoneChild [
 				self assert: aClickCollection size equals: 1.
 				self assert: aClickCollection first equals: #parent ] ].
 
-	^ aScripter syncContinue
+	aScripter syncContinue
 ]
 
-{ #category : #'examples - events' }
-BlClickEventExamplesTest >> testClickInVisibleChild [
+{ #category : #tests }
+BlClickEventTest >> testClickInVisibleChild [
 
-	<sampleInstance>
 	| aScripter |
 	aScripter := self twoElementsInScripter.
 
@@ -173,55 +167,60 @@ BlClickEventExamplesTest >> testClickInVisibleChild [
 				self assert: aClickCollection size equals: 1.
 				self assert: aClickCollection first equals: #child ] ].
 
-	^ aScripter syncContinue
+	aScripter syncContinue
 ]
 
-{ #category : #'examples - elements' }
-BlClickEventExamplesTest >> threeElements [
+{ #category : #'running - elements' }
+BlClickEventTest >> threeElements [
 
-	<sampleInstance>
 	^ self element
 		  addChild: (self element
 				   addChild: self element as: #grandchild;
 				   background: Color red muchLighter)
 		  as: #child;
 		  background: Color green muchLighter;
-		  id: #parent
+		  id: #parent;
+		  yourself
 ]
 
-{ #category : #'examples - elements in scripter' }
-BlClickEventExamplesTest >> threeElementsInScripter [
+{ #category : #'running - elements in scripter' }
+BlClickEventTest >> threeElementsInScripter [
 
-	<sampleInstance>
 	^ self scripterWithElement: [ :aTarget :aScripter |
 		  | anElement aChild anEventCollection |
 		  anElement := self threeElements.
 		  anEventCollection := aScripter userData
 			                       at: #clicks
 			                       ifAbsentPut: [ OrderedCollection new ].
-		  anElement when: BlClickEvent do: [ :anEvent |
-			  anEventCollection add: #parent.
-			  anEvent consumed: true ].
+		  anElement addEventHandler: (BlEventHandler
+				   on: BlClickEvent
+				   do: [ :anEvent |
+					   anEventCollection add: #parent.
+					   anEvent consumed: true ]).
 		  aChild := anElement childAt: 1.
-		  aChild when: BlClickEvent do: [ :anEvent |
-			  anEventCollection add: #child.
-			  anEvent consumed: true ].
-		  (aChild childAt: 1) when: BlClickEvent do: [ :anEvent |
-			  anEventCollection add: #grandchild.
-			  anEvent consumed: true ].
+		  aChild addEventHandler: (BlEventHandler
+				   on: BlClickEvent
+				   do: [ :anEvent |
+					   anEventCollection add: #child.
+					   anEvent consumed: true ]).
+		  (aChild childAt: 1) addEventHandler: (BlEventHandler
+				   on: BlClickEvent
+				   do: [ :anEvent |
+					   anEventCollection add: #grandchild.
+					   anEvent consumed: true ]).
 		  anElement ]
 ]
 
-{ #category : #'examples - elements' }
-BlClickEventExamplesTest >> threeElementsWithFalseChildClipping [
+{ #category : #'running - elements' }
+BlClickEventTest >> threeElementsWithFalseChildClipping [
 
-	<sampleInstance>
 	| aParent aChild aGrandchild |
 	aParent := self element
 		           background: Color green muchLighter;
 		           id: #parent;
 		           layout: BlFrameLayout new;
-		           size: 100 @ 100.
+		           size: 100 @ 100;
+		           yourself.
 
 	aChild := self element
 		          size: 30 @ 30;
@@ -229,7 +228,8 @@ BlClickEventExamplesTest >> threeElementsWithFalseChildClipping [
 		          clipChildren: false;
 		          constraintsDo: [ :c |
 			          c frame horizontal alignCenter.
-			          c frame vertical alignCenter ].
+			          c frame vertical alignCenter ];
+		          yourself.
 
 	aGrandchild := self element
 		               size: 20 @ 20;
@@ -238,7 +238,8 @@ BlClickEventExamplesTest >> threeElementsWithFalseChildClipping [
 		               constraintsDo: [ :c |
 			               c ignoreByLayout.
 			               c ignored horizontal alignRightAt: 1.1.
-			               c ignored vertical alignTopAt: 1.1 ].
+			               c ignored vertical alignTopAt: 1.1 ];
+		               yourself.
 
 	aParent addChild: aChild.
 	aChild addChild: aGrandchild.
@@ -246,33 +247,37 @@ BlClickEventExamplesTest >> threeElementsWithFalseChildClipping [
 	^ aParent
 ]
 
-{ #category : #'examples - elements in scripter' }
-BlClickEventExamplesTest >> threeElementsWithFalseChildClippingInScripter [
+{ #category : #'running - elements in scripter' }
+BlClickEventTest >> threeElementsWithFalseChildClippingInScripter [
 
-	<sampleInstance>
 	^ self scripterWithElement: [ :aTarget :aScripter |
 		  | anElement aChild anEventCollection |
 		  anElement := self threeElementsWithFalseChildClipping.
 		  anEventCollection := aScripter userData
 			                       at: #clicks
 			                       ifAbsentPut: [ OrderedCollection new ].
-		  anElement when: BlClickEvent do: [ :anEvent |
-			  anEventCollection add: #parent.
-			  anEvent consumed: true ].
+		  anElement addEventHandler: (BlEventHandler
+				   on: BlClickEvent
+				   do: [ :anEvent |
+					   anEventCollection add: #parent.
+					   anEvent consumed: true ]).
 		  aChild := anElement childAt: 1.
-		  aChild when: BlClickEvent do: [ :anEvent |
-			  anEventCollection add: #child.
-			  anEvent consumed: true ].
-		  (aChild childAt: 1) when: BlClickEvent do: [ :anEvent |
-			  anEventCollection add: #grandchild.
-			  anEvent consumed: true ].
+		  aChild addEventHandler: (BlEventHandler
+				   on: BlClickEvent
+				   do: [ :anEvent |
+					   anEventCollection add: #child.
+					   anEvent consumed: true ]).
+		  (aChild childAt: 1) addEventHandler: (BlEventHandler
+				   on: BlClickEvent
+				   do: [ :anEvent |
+					   anEventCollection add: #grandchild.
+					   anEvent consumed: true ]).
 		  anElement ]
 ]
 
-{ #category : #'examples - elements' }
-BlClickEventExamplesTest >> threeElementsWithTrueChildClipping [
+{ #category : #'running - elements' }
+BlClickEventTest >> threeElementsWithTrueChildClipping [
 
-	<sampleInstance>
 	| aParent aChild |
 	aParent := self threeElementsWithFalseChildClipping.
 
@@ -282,54 +287,62 @@ BlClickEventExamplesTest >> threeElementsWithTrueChildClipping [
 	^ aParent
 ]
 
-{ #category : #'examples - elements in scripter' }
-BlClickEventExamplesTest >> threeElementsWithTrueChildClippingInScripter [
+{ #category : #'running - elements in scripter' }
+BlClickEventTest >> threeElementsWithTrueChildClippingInScripter [
 
-	<sampleInstance>
 	^ self scripterWithElement: [ :aTarget :aScripter |
 		  | anElement aChild anEventCollection |
 		  anElement := self threeElementsWithTrueChildClipping.
 		  anEventCollection := aScripter userData
 			                       at: #clicks
 			                       ifAbsentPut: [ OrderedCollection new ].
-		  anElement when: BlClickEvent do: [ :anEvent |
-			  anEventCollection add: #parent.
-			  anEvent consumed: true ].
+		  anElement addEventHandler: (BlEventHandler
+				   on: BlClickEvent
+				   do: [ :anEvent |
+					   anEventCollection add: #parent.
+					   anEvent consumed: true ]).
 		  aChild := anElement childAt: 1.
-		  aChild when: BlClickEvent do: [ :anEvent |
-			  anEventCollection add: #child.
-			  anEvent consumed: true ].
-		  (aChild childAt: 1) when: BlClickEvent do: [ :anEvent |
-			  anEventCollection add: #grandchild.
-			  anEvent consumed: true ].
+		  aChild addEventHandler: (BlEventHandler
+				   on: BlClickEvent
+				   do: [ :anEvent |
+					   anEventCollection add: #child.
+					   anEvent consumed: true ]).
+		  (aChild childAt: 1) addEventHandler: (BlEventHandler
+				   on: BlClickEvent
+				   do: [ :anEvent |
+					   anEventCollection add: #grandchild.
+					   anEvent consumed: true ]).
 		  anElement ]
 ]
 
-{ #category : #'examples - elements' }
-BlClickEventExamplesTest >> twoElements [
+{ #category : #'running - elements' }
+BlClickEventTest >> twoElements [
 
-	<sampleInstance>
 	^ self element
 		  addChild: self element as: #child;
 		  background: Color green muchLighter;
-		  id: #parent
+		  id: #parent;
+		  yourself
 ]
 
-{ #category : #'examples - elements in scripter' }
-BlClickEventExamplesTest >> twoElementsInScripter [
+{ #category : #'running - elements in scripter' }
+BlClickEventTest >> twoElementsInScripter [
 
-	<sampleInstance>
 	^ self scripterWithElement: [ :aTarget :aScripter |
 		  | anElement anEventCollection |
 		  anElement := self twoElements.
 		  anEventCollection := aScripter userData
 			                       at: #clicks
 			                       ifAbsentPut: [ OrderedCollection new ].
-		  anElement when: BlClickEvent do: [ :anEvent |
-			  anEventCollection add: #parent.
-			  anEvent consumed: true ].
-		  (anElement childAt: 1) when: BlClickEvent do: [ :anEvent |
-			  anEventCollection add: #child.
-			  anEvent consumed: true ].
+		  anElement addEventHandler: (BlEventHandler
+				   on: BlClickEvent
+				   do: [ :anEvent |
+					   anEventCollection add: #parent.
+					   anEvent consumed: true ]).
+		  (anElement childAt: 1) addEventHandler: (BlEventHandler
+				   on: BlClickEvent
+				   do: [ :anEvent |
+					   anEventCollection add: #child.
+					   anEvent consumed: true ]).
 		  anElement ]
 ]

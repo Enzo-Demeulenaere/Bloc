@@ -10,7 +10,7 @@ Class {
 
 { #category : #accessing }
 BlSpaceFrameHostValidationPhase >> name [
-	<return: #String>
+	"Return the string representing the name of the receiver."
 	
 	^ 'Host validation'
 ]
