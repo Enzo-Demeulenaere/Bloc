@@ -5,6 +5,52 @@ Class {
 }
 
 { #category : #tests }
+BlFlapTest class >> exampleContainerAndHandleAligned [
+
+	<script>
+	self new exampleContainerAndHandleAligned openInSpace
+]
+
+{ #category : #tests }
+BlFlapTest >> exampleContainerAndHandleAligned [
+
+	<demo>
+	| parent elt1 elt2 |
+	parent := BlElement new
+		          layout: BlLinearLayout horizontal;
+		          border: (BlBorder builder
+				           dashed;
+				           paint: Color red;
+				           width: 3;
+				           build).
+
+	elt1 := BlElement new
+		        size: 50 @ 100;
+		        background: Color lightBlue.
+	elt2 := BlElement new
+		        size: 200 @ 200;
+		        background: Color lightGreen.
+
+	elt1 constraintsDo: [ :c | c linear vertical alignCenter ].
+	elt2 constraintsDo: [ :c |
+		c linear horizontal alignLeft.
+		c vertical matchParent ].
+
+	parent constraintsDo: [ :c |
+		c vertical matchParent.
+		c horizontal fitContent ].
+	parent addChildren: {
+			elt2.
+			elt1 }.
+	elt2 visibility: BlVisibility visible.
+	"=> easy implementation : just have to change visibility from visible to gone"
+
+
+	parent padding: (BlInsets all: 5).
+	^ parent
+]
+
+{ #category : #tests }
 BlFlapTest >> testClickOnHandleToCloseAndOpenAgain [
 
 	| flap |
@@ -66,43 +112,6 @@ BlFlapTest >> testDragChangesHandlePositionVertical [
 	self assert: flap isOpen.
 	self waitTestingSpaces.
 	self assert: flap handle position equals: handlePosition + (20 @ 30)
-]
-
-{ #category : #tests }
-BlFlapTest >> testExampleContainerAndHandleAligned [
-
-	| parent elt1 elt2 |
-	parent := BlElement new
-		          layout: BlLinearLayout horizontal;
-		          border: (BlBorder builder
-				           dashed;
-				           paint: Color red;
-				           width: 3;
-				           build).
-
-	elt1 := BlElement new
-		        size: 50 @ 100;
-		        background: Color lightBlue.
-	elt2 := BlElement new
-		        size: 200 @ 200;
-		        background: Color lightGreen.
-
-	elt1 constraintsDo: [ :c |
-		c linear vertical alignCenter ].
-	elt2 constraintsDo: [ :c | c linear horizontal alignLeft. c vertical matchParent ].
-
-	parent constraintsDo: [ :c |
-		c vertical matchParent.
-		c horizontal fitContent ].
-	parent addChildren: {
-			elt2.
-			elt1 }.
-	elt2 visibility: BlVisibility visible.
-	"=> easy implementation : just have to change visibility from visible to gone"
-
-
-	parent padding: (BlInsets all: 5).
-	parent openInSpace
 ]
 
 { #category : #tests }
