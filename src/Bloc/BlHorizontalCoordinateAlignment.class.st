@@ -5,7 +5,7 @@ Class {
 		'coordinate',
 		'relativeAlignment'
 	],
-	#category : 'Bloc-Layouts-Alignment'
+	#category : #'Bloc-Layouts-Alignment'
 }
 
 { #category : #'class initialization' }
@@ -31,10 +31,11 @@ BlHorizontalCoordinateAlignment >> directed: aBlLayoutDirection [
 
 { #category : #initialization }
 BlHorizontalCoordinateAlignment >> initialize [
+
 	super initialize.
-	
+
 	coordinate := 0.0.
-	relativeAlignment := BlElementAlignment horizontal center
+	relativeAlignment := BlElementAlignment vertical center
 ]
 
 { #category : #factory }
