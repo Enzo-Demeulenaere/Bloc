@@ -3,7 +3,6 @@ Class {
 	#superclass : #SpPresenter,
 	#instVars : [
 		'canva',
-		'errorMessage',
 		'code',
 		'collector',
 		'tree'
@@ -61,34 +60,31 @@ BlDemoPresenter >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #operations }
 BlDemoPresenter >> drawOnCanvas: anElement [
 
 	| root |
 	root := self canva space root.
 	root removeChildren.
-	root addChild: ((anElement isKindOf: BlElement)
-		ifTrue: [ anElement ]
-		ifFalse: [ self errorMessage ])
+	root addChild: anElement 
 ]
 
 { #category : #accessing }
-BlDemoPresenter >> errorMessage [
+BlDemoPresenter >> errorElement [
 
-	^ errorMessage ifNil: [
-		  BlElement new
-			  background: Color lightRed;
-			  layout: BlFrameLayout new;
-			  constraintsDo: [ :c |
-				  c vertical matchParent.
-				  c horizontal matchParent ];
-			  addChild: (BlTextElement new
-					   text:
-						   'This method does not return any element for you to see'
-							   asRopedText;
-					   constraintsDo: [ :c |
-						   c frame vertical alignCenter.
-						   c frame horizontal alignCenter ]) ]
+	^ BlElement new
+		  background: Color lightRed;
+		  layout: BlFrameLayout new;
+		  constraintsDo: [ :c |
+			  c vertical matchParent.
+			  c horizontal matchParent ];
+		  addChild: (BlTextElement new
+				   text:
+					   'This method does not return any drawable element. It is a method used by one or more examples above'
+						   asRopedText;
+				   constraintsDo: [ :c |
+					   c frame vertical alignCenter.
+					   c frame horizontal alignCenter ])
 ]
 
 { #category : #operations }
@@ -96,6 +92,7 @@ BlDemoPresenter >> executeCode [
 
 	| res |
 	res := tree selectedItem execute.
+	res ifNil: [ res := self errorElement ].
 	self drawOnCanvas: res
 ]
 

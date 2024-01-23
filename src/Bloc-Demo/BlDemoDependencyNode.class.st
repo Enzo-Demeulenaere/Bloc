@@ -7,8 +7,7 @@ Class {
 { #category : #accessing }
 BlDemoDependencyNode >> execute [
 
-	^ BlElement new
-		  background: Color lightBlue; size: 100@100
+	^ nil
 ]
 
 { #category : #accessing }
