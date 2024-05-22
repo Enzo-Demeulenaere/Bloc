@@ -12,17 +12,17 @@ Class {
 
 { #category : #examples }
 TextExperiment class >> exampleHelloWorld [
-
+<demo>
 	<simpleInstance>
 	| elt |
 	elt := BlTextElement new text: 'Hello world!' asRopedText.
-	elt openInNewSpace.
+	
 	^ elt
 ]
 
 { #category : #examples }
 TextExperiment class >> helloBloc [
-
+<demo>
 	<sampleInstance>
 	| labelText label |
 	labelText := 'hello from bloc' asRopedText
@@ -40,13 +40,12 @@ TextExperiment class >> helloBloc [
 
 	label := (BlTextElement text: labelText) position: 50 @ 10; background: Color yellow.
 
-	label openInNewSpace.
 	^ label
 ]
 
 { #category : #examples }
 TextExperiment class >> helloHarfbuzz [
-
+<demo>
 	<sampleInstance>
 	| labelText label |
 	"Harfbuzz rendering is currently commented out in BATextParagraphSpan >> measure "
@@ -78,7 +77,7 @@ TextExperiment class >> helloHarfbuzz [
 
 { #category : #examples }
 TextExperiment class >> sampleEditorMeasure [
-
+<demo>
 	<sampleInstance>
 	| labelText label |
 	labelText := 'Sphinx - a := A->B->>C <= c|=>d~~>e.' asRopedText
@@ -98,7 +97,7 @@ TextExperiment class >> sampleEditorMeasure [
 
 { #category : #examples }
 TextExperiment class >> sampleLabelMeasure [
-
+<demo>
 	<sampleInstance>
 	| labelText label |
 	labelText := 'Sphinx - a := A->B->>C <= c|=>d~~>e.' asRopedText
@@ -119,7 +118,7 @@ TextExperiment class >> sampleLabelMeasure [
 
 { #category : #examples }
 TextExperiment class >> sampleMeasure [
-
+<demo>
 	<sampleInstance>
 	| container |
 	container := BlElement new
@@ -140,13 +139,13 @@ TextExperiment class >> sampleMeasure [
 			self sampleLabelMeasure.
 			BlTextElement text: 'tight measure' asRopedText.
 			self sampletightMeasure }.
-	container openInNewSpace.
+
 	^ container
 ]
 
 { #category : #examples }
 TextExperiment class >> sampletightMeasure [
-
+<demo>
 	<sampleInstance>
 	| labelText label |
 	labelText := 'Sphinx - a := A->B->>C <= c|=>d~~>e.' asRopedText
@@ -167,7 +166,7 @@ TextExperiment class >> sampletightMeasure [
 
 { #category : #examples }
 TextExperiment class >> textAlignment1 [
-
+<demo>
 	<sampleInstance>
 	| t1 t2 p |
 	t1 := BlTextElement text: 'Element' asRopedText.
@@ -192,7 +191,7 @@ TextExperiment class >> textAlignment1 [
 
 { #category : #examples }
 TextExperiment class >> textAlignment2 [
-
+<demo>
 	<sampleInstance>
 	| t1 t2 p |
 	t1 := BlTextElement text: 'Element' asRopedText.

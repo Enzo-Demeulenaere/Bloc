@@ -12,7 +12,7 @@ Class {
 
 { #category : #examples }
 TransformExperiment class >> transformBlBasicLayout [
-
+<demo>
 	<sampleInstance>
 	| child parent |
 	child := BlElement new
@@ -30,13 +30,12 @@ TransformExperiment class >> transformBlBasicLayout [
 	parent whenLayoutedDoOnce: [
 		child transformDo: [ :t | t translateBy: child size negated / 2 ] ].
 
-	parent openInSpace.
 	^parent.
 ]
 
 { #category : #examples }
 TransformExperiment class >> transformExample [
-
+<demo>
 	<sampleInstance>
 	| container node |
 	container := BlElement new
@@ -63,8 +62,7 @@ TransformExperiment class >> transformExample [
 			translateBy: 50 @ 50 ].
 
 	container whenLayoutedDoOnce:  [ container addChild: node.].
-
-	container openInNewSpace. 
+ 
 	^ container
 ]
 

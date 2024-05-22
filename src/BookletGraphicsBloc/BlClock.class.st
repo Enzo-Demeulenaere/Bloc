@@ -41,6 +41,20 @@ BlClock class >> openInDynamicLayout [
 
 	space root addChild: clock.
 	space show.
+
+	^ clock
+]
+
+{ #category : #example }
+BlClock class >> openInDynamicLayoutDemo [
+<demo>
+	| clock |
+
+
+	clock := self new constraintsDo: [ :c |
+		         c horizontal matchParent.
+		         c vertical matchParent ].
+
 	^ clock
 ]
 
