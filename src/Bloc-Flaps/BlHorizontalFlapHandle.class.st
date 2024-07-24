@@ -1,10 +1,11 @@
 Class {
-	#name : #BlHorizontalFlapHandle,
-	#superclass : #BlFlapHandle,
-	#category : #'Bloc-Flaps'
+	#name : 'BlHorizontalFlapHandle',
+	#superclass : 'BlFlapHandle',
+	#category : 'Bloc-Flaps',
+	#package : 'Bloc-Flaps'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlHorizontalFlapHandle >> defaultLabel [
 
 	| lab textSize |
@@ -19,7 +20,7 @@ BlHorizontalFlapHandle >> defaultLabel [
 	^ lab
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BlHorizontalFlapHandle >> initializeGeometry [
 
 	| leftRadii rightRadii |

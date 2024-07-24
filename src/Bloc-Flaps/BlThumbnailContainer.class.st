@@ -1,37 +1,38 @@
 Class {
-	#name : #BlThumbnailContainer,
-	#superclass : #BlElement,
+	#name : 'BlThumbnailContainer',
+	#superclass : 'BlElement',
 	#instVars : [
 		'elements',
 		'flap'
 	],
-	#category : #'Bloc-Flaps'
+	#category : 'Bloc-Flaps',
+	#package : 'Bloc-Flaps'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BlThumbnailContainer >> defaultColor [
 
 	^ Color lightRed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlThumbnailContainer >> elements [
 	^ elements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlThumbnailContainer >> flap [
 
 	^ flap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlThumbnailContainer >> flap: aBlFlap [
 
 	flap := aBlFlap 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BlThumbnailContainer >> initialize [
 
 	super initialize.
@@ -42,27 +43,15 @@ BlThumbnailContainer >> initialize [
 	self initializeBorder
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BlThumbnailContainer >> initializeBackground [
 
 	self background: self defaultColor.
 	self background opacity: 0.5
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BlThumbnailContainer >> initializeBorder [
 
 	self border: (BlBorder paint: self defaultColor darker width: 5)
-]
-
-{ #category : #initialization }
-BlThumbnailContainer >> initializeConstraints [ 
-
-	self constraintsDo: [ :c | c vertical matchParent ].
-]
-
-{ #category : #initialization }
-BlThumbnailContainer >> initializeLayout [.
-
-	self layout: BlFlowLayout vertical.
 ]

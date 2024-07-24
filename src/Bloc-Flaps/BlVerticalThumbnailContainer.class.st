@@ -1,16 +1,17 @@
 Class {
-	#name : #BlVerticalThumbnailContainer,
-	#superclass : #BlThumbnailContainer,
-	#category : #'Bloc-Flaps'
+	#name : 'BlVerticalThumbnailContainer',
+	#superclass : 'BlThumbnailContainer',
+	#category : 'Bloc-Flaps',
+	#package : 'Bloc-Flaps'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BlVerticalThumbnailContainer >> initializeConstraints [ 
 	
 	self constraintsDo: [ :c | c horizontal matchParent ].
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BlVerticalThumbnailContainer >> initializeLayout [
 
 	self layout: BlFlowLayout horizontal

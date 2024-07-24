@@ -1,6 +1,6 @@
 Class {
-	#name : #BlFlap,
-	#superclass : #BlElement,
+	#name : 'BlFlap',
+	#superclass : 'BlElement',
 	#instVars : [
 		'handle',
 		'openPercentage',
@@ -8,10 +8,11 @@ Class {
 		'open',
 		'container'
 	],
-	#category : #'Bloc-Flaps'
+	#category : 'Bloc-Flaps',
+	#package : 'Bloc-Flaps'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 BlFlap >> addToSpace: aBlSpace [
 
 	aBlSpace root addChild: self.
@@ -19,7 +20,7 @@ BlFlap >> addToSpace: aBlSpace [
 	
 ]
 
-{ #category : #'api - look' }
+{ #category : 'api - look' }
 BlFlap >> background: aColor [
 
 	self container background:
@@ -28,57 +29,51 @@ BlFlap >> background: aColor [
 	self handle background: aColor
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 BlFlap >> click [ 
 	self isOpen ifTrue: [ self close ] ifFalse: [ self open ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 BlFlap >> close [
 
 	open := false.
 	self container visibility: BlVisibility gone
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlFlap >> container [ 
 	^ container
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BlFlap >> defaultColor [
 
 	^ Color lightRed
 ]
 
-{ #category : #'as yet unclassified' }
-BlFlap >> defaultEdge [
-
-	^ #left
-]
-
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 BlFlap >> defaultOpenPercentage [
 
 	^ 0.1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlFlap >> edge [
 	^ edge.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlFlap >> handle [ 
 	^ handle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlFlap >> handle: aBlFlapHandle [ 
 	handle := aBlFlapHandle 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BlFlap >> initialize [
 
 	super initialize.
@@ -91,61 +86,32 @@ BlFlap >> initialize [
 	self initializeHandle
 ]
 
-{ #category : #'as yet unclassified' }
-BlFlap >> initializeConstraints [ 
-	
-	self constraintsDo: [ :c |
-		c vertical matchParent.
-		c horizontal fitContent ].
-]
-
-{ #category : #initialization }
-BlFlap >> initializeContainer [
-
-	container := BlHorizontalThumbnailContainer new flap: self.
-	self addChild: container
-]
-
-{ #category : #'as yet unclassified' }
-BlFlap >> initializeHandle [
-
-	handle := BlHorizontalFlapHandle new flap: self.
-	handle constraintsDo: [ :c | c linear vertical alignCenter ].
-	self addChild: handle
-]
-
-{ #category : #initialization }
-BlFlap >> initializeLayout [ 
-
-	self layout: BlLinearLayout horizontal
-]
-
-{ #category : #testing }
+{ #category : 'testing' }
 BlFlap >> isOpen [
 
 	^ open
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlFlap >> open [
 
 	open := true.
 	self container visibility: BlVisibility visible.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlFlap >> openPercentage [ 
 	^ openPercentage 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlFlap >> openPercentage: aNumber [
 	
 	aNumber > 90 ifTrue: [ ^ self ].
 	openPercentage := aNumber 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 BlFlap >> updateSize [ 
 
 	self container width: self space width * self openPercentage
