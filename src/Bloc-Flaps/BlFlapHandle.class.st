@@ -21,6 +21,18 @@ BlFlapHandle >> defaultBackground [
 	^ Color veryLightGray 
 ]
 
+{ #category : 'accessing' }
+BlFlapHandle >> defaultLabel [
+
+	| lab |
+	lab := BlTextElement text: (self name asRopedText
+			        fontSize: 15;
+			        yourself).
+	lab forceLayout.
+	
+	^ lab
+]
+
 { #category : 'as yet unclassified' }
 BlFlapHandle >> dragTo: aPosition [
 
@@ -84,7 +96,7 @@ BlFlapHandle >> initializeEvents [
 BlFlapHandle >> initializeLabel [
 
 	label := self defaultLabel.
-	self addChild: label
+	self addChild: label as: 'label'
 ]
 
 { #category : 'accessing' }
@@ -96,6 +108,12 @@ BlFlapHandle >> label [
 BlFlapHandle >> label: aTextElement [
 
 	label := aTextElement 
+]
+
+{ #category : 'accessing' }
+BlFlapHandle >> name [ 
+
+	^ self flap name
 ]
 
 { #category : 'events' }
@@ -116,4 +134,11 @@ BlFlapHandle >> rotateBy: anAngle [
 BlFlapHandle >> secondaryClick [ 
 
 	self inform: 'TODO: Context Menu'
+]
+
+{ #category : 'updating' }
+BlFlapHandle >> updateLabel [ 
+
+	self removeChildWithId: 'label'.
+	self initializeLabel 
 ]

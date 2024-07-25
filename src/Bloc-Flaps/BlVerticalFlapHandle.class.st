@@ -5,18 +5,6 @@ Class {
 	#package : 'Bloc-Flaps'
 }
 
-{ #category : 'accessing' }
-BlVerticalFlapHandle >> defaultLabel [
-
-	| lab |
-	lab := BlTextElement text: ('New Flap' asRopedText
-			        fontSize: 15;
-			        yourself).
-	lab forceLayout.
-	
-	^ lab
-]
-
 { #category : 'initialization' }
 BlVerticalFlapHandle >> initializeGeometry [
 

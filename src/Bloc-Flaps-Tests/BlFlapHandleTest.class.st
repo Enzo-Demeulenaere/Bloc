@@ -1,10 +1,11 @@
 Class {
-	#name : #BlFlapHandleTest,
-	#superclass : #TestCase,
-	#category : #'Bloc-Flaps-Tests'
+	#name : 'BlFlapHandleTest',
+	#superclass : 'TestCase',
+	#category : 'Bloc-Flaps-Tests',
+	#package : 'Bloc-Flaps-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlFlapHandleTest >> testFlapHandleCorrectlyInitialized [
 
 	| handle |
@@ -17,7 +18,7 @@ BlFlapHandleTest >> testFlapHandleCorrectlyInitialized [
 	self assert: handle defaultLabel text asString equals: 'New Flap'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlFlapHandleTest >> testFlapHandleCorrectlyInitializedWithFlap [
 
 	| flap handle |

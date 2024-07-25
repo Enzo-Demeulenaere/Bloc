@@ -12,6 +12,19 @@ BlVerticalFlap class >> example [
 	self new openInSpace
 ]
 
+{ #category : 'examples' }
+BlVerticalFlap class >> exampleWithDifferentName [
+
+	<script>
+	self new name: 'different name'; openInSpace
+]
+
+{ #category : 'instance creation' }
+BlVerticalFlap class >> new [ 
+
+	^ self basicNew initialize
+]
+
 { #category : 'as yet unclassified' }
 BlVerticalFlap >> defaultEdge [ 
 
@@ -25,13 +38,14 @@ BlVerticalFlap >> dragTo: aPosition [
 	self isOpen ifFalse: [ self open ].
 	tempPos := aPosition.
 	spaceExtent := self space extent.
-	self container height: (tempPos y < 50
-			 ifTrue: [ 50 ]
-			 ifFalse: [ tempPos y min: spaceExtent y - 100 ]).
+	self container height: (tempPos y beBetween: 50 and: spaceExtent y - 100).
+	"Here 50 and 100 represent a minimum top and bottom margin
+	
+	self position: aPosition x @ self position y
+	redefining the position doesn't work as the AlignCenter constraint overwrites the position.
+	Use another alignment constraint of delete somehow the current constraint"
 	newX := tempPos x.
-	newX := newX < 0
-		        ifTrue: [ 0 ]
-		        ifFalse: [ newX min: spaceExtent x - self handle width ].
+	newX := newX beBetween: 0 and: spaceExtent x - self handle width.
 
 	self handle constraintsDo: [ :c |
 		c linear horizontal alignment:
@@ -58,8 +72,6 @@ BlVerticalFlap >> initializeContainer [
 BlVerticalFlap >> initializeHandle [
 
 	handle := BlVerticalFlapHandle new flap: self.
-	"	newX := self space width/
-	handle position: "
 	handle constraintsDo: [ :c | c linear horizontal alignCenter ].
 	self addChild: handle
 ]

@@ -1,17 +1,18 @@
 Class {
-	#name : #BlFlapTest,
-	#superclass : #BlParameterizedHostTest,
-	#category : #'Bloc-Flaps-Tests'
+	#name : 'BlFlapTest',
+	#superclass : 'BlParameterizedHostTest',
+	#category : 'Bloc-Flaps-Tests',
+	#package : 'Bloc-Flaps-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlFlapTest class >> exampleContainerAndHandleAligned [
 
 	<script>
 	self new exampleContainerAndHandleAligned openInSpace
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlFlapTest >> exampleContainerAndHandleAligned [
 
 	<demo>
@@ -50,7 +51,7 @@ BlFlapTest >> exampleContainerAndHandleAligned [
 	^ parent
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlFlapTest >> testClickOnHandleToCloseAndOpenAgain [
 
 	| flap |
@@ -66,7 +67,7 @@ BlFlapTest >> testClickOnHandleToCloseAndOpenAgain [
 	self assert: flap container visibility equals: BlVisibility visible.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlFlapTest >> testDragChangesHandlePosition [
 
 	| flap space handlePosition |
@@ -82,7 +83,7 @@ BlFlapTest >> testDragChangesHandlePosition [
 	self assert: flap handle position equals: handlePosition + (20 @ 30)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlFlapTest >> testDragChangesHandlePositionHorizontal [
 
 	| flap space handlePosition |
@@ -98,7 +99,7 @@ BlFlapTest >> testDragChangesHandlePositionHorizontal [
 	self assert: flap handle position equals: handlePosition + (20 @ 30)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlFlapTest >> testDragChangesHandlePositionVertical [
 
 	| flap space handlePosition |
@@ -114,7 +115,7 @@ BlFlapTest >> testDragChangesHandlePositionVertical [
 	self assert: flap handle position equals: handlePosition + (20 @ 30)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlFlapTest >> testFlapAddedInASpace [
 
 	| flap space |
@@ -125,13 +126,13 @@ BlFlapTest >> testFlapAddedInASpace [
 	self assert: flap parent equals: space root
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlFlapTest >> testFlapCorrectlyInitialized [
 
 	| flap |
 	flap := BlFlap new.
 
-	self assert: flap class equals: BlFlap.
+	self assert: flap class equals: BlHorizontalFlap.
 	self assert: flap handle class equals: BlHorizontalFlapHandle.
 	self assert: flap container class equals: BlHorizontalThumbnailContainer.
 	self assert: flap isOpen.

@@ -1,23 +1,24 @@
 Class {
-	#name : #BlVerticalFlapTest,
-	#superclass : #TestCase,
-	#category : #'Bloc-Flaps-Tests'
+	#name : 'BlVerticalFlapTest',
+	#superclass : 'TestCase',
+	#category : 'Bloc-Flaps-Tests',
+	#package : 'Bloc-Flaps-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlVerticalFlapTest >> testConstraintsCorrectlyInitialized [
 
 	| flap |
 	flap := BlVerticalFlap new.
 	self
-		assert: flap constraints horizontal resizer class
+		assert: flap constraints vertical resizer class
 		equals: BlLayoutMatchParentResizer.
 	self
-		assert: flap constraints vertical resizer class
+		assert: flap constraints horizontal resizer class
 		equals: BlLayoutFitContentResizer
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlVerticalFlapTest >> testContainerCorrectlyInitialized [
 
 	| flap |
@@ -27,7 +28,7 @@ BlVerticalFlapTest >> testContainerCorrectlyInitialized [
 		equals: BlVerticalThumbnailContainer
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlVerticalFlapTest >> testDefaultVerticalIsAttachedToTopEdge [
 
 	| flap |
@@ -36,7 +37,7 @@ BlVerticalFlapTest >> testDefaultVerticalIsAttachedToTopEdge [
 	self assert: flap edge equals: #top
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlVerticalFlapTest >> testLayoutCorrectlyInitialized [ 
 
 	|flap|

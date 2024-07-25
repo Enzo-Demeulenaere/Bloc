@@ -9,6 +9,13 @@ Class {
 	#package : 'Bloc-Flaps'
 }
 
+{ #category : 'adding' }
+BlThumbnailContainer >> addElement: aBlElement [
+
+	self elements add: aBlElement.
+	self addChild: aBlElement 
+]
+
 { #category : 'initialization' }
 BlThumbnailContainer >> defaultColor [
 

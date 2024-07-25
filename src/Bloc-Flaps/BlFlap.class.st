@@ -6,11 +6,24 @@ Class {
 		'openPercentage',
 		'edge',
 		'open',
-		'container'
+		'container',
+		'name'
 	],
 	#category : 'Bloc-Flaps',
 	#package : 'Bloc-Flaps'
 }
+
+{ #category : 'instance creation' }
+BlFlap class >> new [ 
+
+^ BlHorizontalFlap basicNew initialize 
+]
+
+{ #category : 'adding' }
+BlFlap >> addElement: aBlElement [
+
+	self container addElement: aBlElement 
+]
 
 { #category : 'adding' }
 BlFlap >> addToSpace: aBlSpace [
@@ -52,6 +65,12 @@ BlFlap >> defaultColor [
 	^ Color lightRed
 ]
 
+{ #category : 'accessing - defaults' }
+BlFlap >> defaultName [ 
+
+	^ 'New flap'
+]
+
 { #category : 'as yet unclassified' }
 BlFlap >> defaultOpenPercentage [
 
@@ -90,6 +109,19 @@ BlFlap >> initialize [
 BlFlap >> isOpen [
 
 	^ open
+]
+
+{ #category : 'accessing' }
+BlFlap >> name [ 
+
+	^ name ifNil: [ name := self defaultName ]
+]
+
+{ #category : 'accessing' }
+BlFlap >> name: aString [ 
+
+	name := aString.
+	self handle updateLabel
 ]
 
 { #category : 'accessing' }

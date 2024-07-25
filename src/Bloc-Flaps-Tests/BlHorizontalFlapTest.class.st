@@ -1,10 +1,11 @@
 Class {
-	#name : #BlHorizontalFlapTest,
-	#superclass : #TestCase,
-	#category : #'Bloc-Flaps-Tests'
+	#name : 'BlHorizontalFlapTest',
+	#superclass : 'TestCase',
+	#category : 'Bloc-Flaps-Tests',
+	#package : 'Bloc-Flaps-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlHorizontalFlapTest >> testConstraintsCorrectlyInitialized [
 
 	| flap |
@@ -15,7 +16,7 @@ BlHorizontalFlapTest >> testConstraintsCorrectlyInitialized [
 	self assert: flap constraints horizontal resizer class equals: BlLayoutFitContentResizer 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlHorizontalFlapTest >> testContainerCorrectlyInitialized [
 
 	| flap |
@@ -25,7 +26,7 @@ BlHorizontalFlapTest >> testContainerCorrectlyInitialized [
 		equals: BlHorizontalThumbnailContainer
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlHorizontalFlapTest >> testDefaultHorizontalIsAttachedToLeftEdge [
 
 	| flap |
@@ -34,7 +35,7 @@ BlHorizontalFlapTest >> testDefaultHorizontalIsAttachedToLeftEdge [
 	self assert: flap edge equals: #left
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlHorizontalFlapTest >> testLayoutCorrectlyInitialized [
 
 	| flap |

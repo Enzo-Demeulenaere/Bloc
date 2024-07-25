@@ -12,6 +12,13 @@ BlHorizontalFlap class >> example [
 	self new openInSpace
 ]
 
+{ #category : 'examples' }
+BlHorizontalFlap class >> exampleWithDifferentName [
+
+	<script>
+	self new name: 'different name' ;openInSpace
+]
+
 { #category : 'as yet unclassified' }
 BlHorizontalFlap >> defaultEdge [
 
@@ -25,17 +32,14 @@ BlHorizontalFlap >> dragTo: aPosition [
 	self isOpen ifFalse: [ self open ].
 	tempPos := aPosition.
 	spaceExtent := self space extent.
-	self container width: (tempPos x < 50
-			 ifTrue: [ 50 ]
-			 ifFalse: [ tempPos x min: spaceExtent x - 100 ]).
-	"self position: self position x @ aPosition y
+	self container width: (tempPos x beBetween: 50 and: spaceExtent x - 100).
+	"Here 50 and 100 represent a minimum left and right margin
 	
+	self position: self position x @ aPosition y
 	redefining the position doesn't work as the AlignCenter constraint overwrites the position.
 	Use another alignment constraint of delete somehow the current constraint"
 	newY := tempPos y.
-	newY := newY < 0
-		        ifTrue: [ 0 ]
-		        ifFalse: [ newY min: spaceExtent y - self handle height ].
+	newY := newY beBetween: 0 and: spaceExtent y - self handle height.
 	self handle constraintsDo: [ :c |
 		c linear vertical alignment:
 			(BlVerticalCoordinateTopAlignment new coordinate:
