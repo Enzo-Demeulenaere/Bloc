@@ -25,6 +25,54 @@ BlVerticalFlap class >> new [
 	^ self basicNew initialize
 ]
 
+{ #category : 'accessing' }
+BlVerticalFlap >> attachToEdgeBottom [
+
+	self initializePosition.
+	self initializeHandle.
+	self addChild: container.
+
+]
+
+{ #category : 'accessing' }
+BlVerticalFlap >> attachToEdgeLeft [
+
+	self beHorizontal.
+	self initializePosition.
+	self addChild: container.
+	self initializeHandle
+]
+
+{ #category : 'accessing' }
+BlVerticalFlap >> attachToEdgeRight [
+
+	self beHorizontal.
+	self initializePosition.
+	self initializeHandle.
+	self addChild: container
+]
+
+{ #category : 'accessing' }
+BlVerticalFlap >> attachToEdgeTop [
+
+	self initializePosition.
+	self addChild: container.
+	self initializeHandle 
+]
+
+{ #category : 'orientation' }
+BlVerticalFlap >> beHorizontal [
+
+	| newFlap |
+	newFlap := BlHorizontalFlap new.
+	newFlap addToSpace: self space.
+	self removeFromParent.
+	newFlap background: self backgroundColor.
+	newFlap name: self name.
+	newFlap addElements: self elements.
+	^ newFlap
+]
+
 { #category : 'as yet unclassified' }
 BlVerticalFlap >> defaultEdge [ 
 
@@ -51,6 +99,22 @@ BlVerticalFlap >> dragTo: aPosition [
 		c linear horizontal alignment:
 			(BlHorizontalCoordinateLeftAlignment new coordinate:
 				 newX / spaceExtent x) ]
+]
+
+{ #category : 'accessing' }
+BlVerticalFlap >> edge: aSymbol [
+
+	aSymbol = self edge ifTrue: [ ^ self ].
+	({ "#left. #right." #top. #bottom } includes: aSymbol) ifFalse: [
+		self inform:
+			'Can only attach to #top or #bottom edge '.
+		^ self ].
+	self removeChildren.
+	edge := aSymbol.
+	aSymbol = #left ifTrue: [ "self attachToEdgeLeft" ].
+	aSymbol = #right ifTrue: [ "self attachToEdgeRight" ].
+	aSymbol = #top ifTrue: [ self attachToEdgeTop ].
+	aSymbol = #bottom ifTrue: [ self attachToEdgeBottom ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -80,4 +144,13 @@ BlVerticalFlap >> initializeHandle [
 BlVerticalFlap >> initializeLayout [
 
 	self layout: BlLinearLayout vertical
+]
+
+{ #category : 'initialization' }
+BlVerticalFlap >> initializePosition [
+
+	self constraintsDo: [ :c |
+		self edge = #top
+			ifTrue: [ c frame vertical alignTop ]
+			ifFalse: [ c frame vertical alignBottom ] ]
 ]

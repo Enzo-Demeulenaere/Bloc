@@ -7,7 +7,8 @@ Class {
 		'edge',
 		'open',
 		'container',
-		'name'
+		'name',
+		'backgroundColor'
 	],
 	#category : 'Bloc-Flaps',
 	#package : 'Bloc-Flaps'
@@ -26,20 +27,39 @@ BlFlap >> addElement: aBlElement [
 ]
 
 { #category : 'adding' }
+BlFlap >> addElements: aCollection [
+
+	self container addElements: aCollection 
+]
+
+{ #category : 'adding' }
 BlFlap >> addToSpace: aBlSpace [
 
+	aBlSpace root layout class = BlFrameLayout ifFalse: [ aBlSpace root layout: BlFrameLayout new].
 	aBlSpace root addChild: self.
-	self updateSize.
 	
 ]
 
 { #category : 'api - look' }
 BlFlap >> background: aColor [
 
+	self backgroundColor: aColor. 
 	self container background:
 		((BlBackground paint: aColor) opacity: 0.5).
 	self container border: (self container border copyWithPaint: aColor).
 	self handle background: aColor
+]
+
+{ #category : 'accessing' }
+BlFlap >> backgroundColor [
+
+	^ backgroundColor
+]
+
+{ #category : 'accessing' }
+BlFlap >> backgroundColor: aColor [ 
+
+	backgroundColor := aColor 
 ]
 
 { #category : 'public' }
@@ -65,6 +85,12 @@ BlFlap >> defaultColor [
 	^ Color lightRed
 ]
 
+{ #category : 'as yet unclassified' }
+BlFlap >> defaultEdge [ 
+
+	self subclassResponsibility 
+]
+
 { #category : 'accessing - defaults' }
 BlFlap >> defaultName [ 
 
@@ -82,6 +108,12 @@ BlFlap >> edge [
 	^ edge.
 ]
 
+{ #category : 'tests - printing' }
+BlFlap >> elements [
+
+	^ container elements
+]
+
 { #category : 'accessing' }
 BlFlap >> handle [ 
 	^ handle
@@ -97,12 +129,45 @@ BlFlap >> initialize [
 
 	super initialize.
 	edge := self defaultEdge.
+	backgroundColor := self defaultColor.
 	open := true.
 	openPercentage := self defaultOpenPercentage.
+	self initializePosition.
 	self initializeConstraints.
 	self initializeLayout.
 	self initializeContainer.
-	self initializeHandle
+	self initializeHandle.
+	self preventMouseEvents 
+]
+
+{ #category : 'initialization' }
+BlFlap >> initializeConstraints [
+
+	self subclassResponsibility
+]
+
+{ #category : 'initialization' }
+BlFlap >> initializeContainer [
+
+	self subclassResponsibility
+]
+
+{ #category : 'initialization' }
+BlFlap >> initializeHandle [
+
+	self subclassResponsibility
+]
+
+{ #category : 'initialization' }
+BlFlap >> initializeLayout [
+
+	self subclassResponsibility
+]
+
+{ #category : 'initialization' }
+BlFlap >> initializePosition [ 
+
+	self subclassResponsibility 
 ]
 
 { #category : 'testing' }
@@ -141,10 +206,4 @@ BlFlap >> openPercentage: aNumber [
 	
 	aNumber > 90 ifTrue: [ ^ self ].
 	openPercentage := aNumber 
-]
-
-{ #category : 'as yet unclassified' }
-BlFlap >> updateSize [ 
-
-	self container width: self space width * self openPercentage
 ]

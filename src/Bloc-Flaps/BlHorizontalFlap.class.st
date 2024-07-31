@@ -20,6 +20,31 @@ BlHorizontalFlap class >> exampleWithDifferentName [
 ]
 
 { #category : 'as yet unclassified' }
+BlHorizontalFlap >> attachToEdgeBottom [
+]
+
+{ #category : 'as yet unclassified' }
+BlHorizontalFlap >> attachToEdgeLeft [
+
+	self initializePosition.
+	self addChild: container.
+	self initializeHandle 
+]
+
+{ #category : 'as yet unclassified' }
+BlHorizontalFlap >> attachToEdgeRight [
+
+	self initializePosition.
+	self initializeHandle.
+	self addChild: container
+]
+
+{ #category : 'as yet unclassified' }
+BlHorizontalFlap >> attachToEdgeTop [
+
+]
+
+{ #category : 'as yet unclassified' }
 BlHorizontalFlap >> defaultEdge [
 
 	^ #left
@@ -44,6 +69,22 @@ BlHorizontalFlap >> dragTo: aPosition [
 		c linear vertical alignment:
 			(BlVerticalCoordinateTopAlignment new coordinate:
 				 newY / spaceExtent y) ]
+]
+
+{ #category : 'accessing' }
+BlHorizontalFlap >> edge: aSymbol [
+
+	aSymbol = self edge ifTrue: [ ^ self ].
+	({ #left. #right } includes: aSymbol) ifFalse: [
+		self inform:
+			'Can only attach to #left or #right edge '.
+		^ self ].
+	self removeChildren.
+	edge := aSymbol.
+	aSymbol = #left ifTrue: [ self attachToEdgeLeft ].
+	aSymbol = #right ifTrue: [ self attachToEdgeRight ].
+	aSymbol = #top ifTrue: [ "self attachToEdgeTop" ].
+	aSymbol = #bottom ifTrue: [ "self attachToEdgeBottom" ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -73,4 +114,14 @@ BlHorizontalFlap >> initializeHandle [
 BlHorizontalFlap >> initializeLayout [ 
 
 	self layout: BlLinearLayout horizontal
+]
+
+{ #category : 'initialization' }
+BlHorizontalFlap >> initializePosition [
+
+	self constraintsDo: [ :c | self edge = #left ifTrue: [ c frame horizontal alignLeft ] ifFalse: [ c frame horizontal alignRight ] ].
+	"self edge = #left
+		ifTrue: [ self constraintsDo: [ :c | c frame horizontal alignLeft ] ]
+		ifFalse: [
+		self constraintsDo: [ :c | c frame horizontal alignRight ] ]"
 ]

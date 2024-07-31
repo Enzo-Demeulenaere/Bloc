@@ -16,6 +16,13 @@ BlThumbnailContainer >> addElement: aBlElement [
 	self addChild: aBlElement 
 ]
 
+{ #category : 'adding' }
+BlThumbnailContainer >> addElements: aCollection [
+
+	aCollection do: [ :each | self elements add: each.
+		self addChild: each ]
+]
+
 { #category : 'initialization' }
 BlThumbnailContainer >> defaultColor [
 
