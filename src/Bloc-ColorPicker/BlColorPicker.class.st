@@ -12,6 +12,14 @@ Class {
 	#category : #'Bloc-ColorPicker'
 }
 
+{ #category : #'instance creation' }
+BlColorPicker class >> open [ 
+
+	<script> 
+	
+	self new openInSpace
+]
+
 { #category : #accessing }
 BlColorPicker >> alpha [ 
 
